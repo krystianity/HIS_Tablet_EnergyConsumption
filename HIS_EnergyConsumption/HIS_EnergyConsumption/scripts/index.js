@@ -1,25 +1,31 @@
-﻿// For an introduction to the Blank template, see the following documentation:
-// http://go.microsoft.com/fwlink/?LinkID=397704
-// To debug code on page load in Ripple or on Android devices/emulators: launch your app, set breakpoints, 
-// and then run "window.location.reload()" in the JavaScript Console.
+﻿/* Vanilla JS App File */
 (function () {
     "use strict";
+
+    if (_config.web_version) {
+        //use JQuery if the APP is running in a Browsertab to kick of the onDeviceReady function
+        //it is otherwise only called by Cordova on Mobile Devices (non Browsers..)
+        $(onDeviceReady);
+    }
 
     document.addEventListener( 'deviceready', onDeviceReady.bind( this ), false );
 
     function onDeviceReady() {
         // Handle the Cordova pause and resume events
         document.addEventListener( 'pause', onPause.bind( this ), false );
-        document.addEventListener( 'resume', onResume.bind( this ), false );
-        
-        // TODO: Cordova has been loaded. Perform any initialization that requires Cordova here.
+        document.addEventListener('resume', onResume.bind(this), false);
+
+        //get a reference to the main angular scope so that it can be called from vanilla JS
+        //make sure to embrace content functions with in an scope.$apply(function(){ content here });
+        _app_scope = angular.element(document.body).scope();
+
+        console.log("VanillaJS ready!");
     };
 
     function onPause() {
-        // TODO: This application has been suspended. Save application state here.
     };
 
     function onResume() {
-        // TODO: This application has been reactivated. Restore application state here.
     };
-} )();
+
+})();

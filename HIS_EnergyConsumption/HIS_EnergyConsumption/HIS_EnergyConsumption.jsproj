@@ -30,11 +30,11 @@
       <Configuration>Debug</Configuration>
       <Platform>Windows Phone 8</Platform>
     </ProjectConfiguration>
-	<ProjectConfiguration Include="Debug|Windows Phone (Universal)">
-	  <Configuration>Debug</Configuration>
-	  <Platform>Windows Phone (Universal)</Platform>
-	</ProjectConfiguration>
-	<ProjectConfiguration Include="Release|Android">
+    <ProjectConfiguration Include="Debug|Windows Phone (Universal)">
+      <Configuration>Debug</Configuration>
+      <Platform>Windows Phone (Universal)</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Android">
       <Configuration>Release</Configuration>
       <Platform>Android</Platform>
     </ProjectConfiguration>
@@ -62,11 +62,11 @@
       <Configuration>Release</Configuration>
       <Platform>Windows Phone 8</Platform>
     </ProjectConfiguration>
-	<ProjectConfiguration Include="Release|Windows Phone (Universal)">
-	  <Configuration>Release</Configuration>
-	  <Platform>Windows Phone (Universal)</Platform>
-	</ProjectConfiguration>
-	<ProjectConfiguration Include="Distribution|Android">
+    <ProjectConfiguration Include="Release|Windows Phone (Universal)">
+      <Configuration>Release</Configuration>
+      <Platform>Windows Phone (Universal)</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Distribution|Android">
       <Configuration>Distribution</Configuration>
       <Platform>Android</Platform>
     </ProjectConfiguration>
@@ -94,10 +94,10 @@
       <Configuration>Distribution</Configuration>
       <Platform>Windows Phone 8</Platform>
     </ProjectConfiguration>
-	<ProjectConfiguration Include="Distribution|Windows Phone (Universal)">
-	  <Configuration>Distribution</Configuration>
-	  <Platform>Windows Phone (Universal)</Platform>
-	</ProjectConfiguration>
+    <ProjectConfiguration Include="Distribution|Windows Phone (Universal)">
+      <Configuration>Distribution</Configuration>
+      <Platform>Windows Phone (Universal)</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>b850d13c-0da9-419b-a5bc-a550393302a9</ProjectGuid>
@@ -110,7 +110,80 @@
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="scripts\config.js" />
+    <Content Include="scripts\controller.js" />
+    <Content Include="styles\app.css" />
+    <Content Include="styles\onsen-css-components-blue-basic-theme.css" />
+    <Content Include="styles\onsen-css-components-blue-theme.css" />
+    <Content Include="styles\onsen-css-components-dark-theme.css" />
+    <Content Include="styles\onsen-css-components-default.css" />
+    <Content Include="styles\onsen-css-components-purple-theme.css" />
+    <Content Include="styles\onsen-css-components-sunshine-theme.css" />
+    <Content Include="styles\onsen-css-components.css" />
+    <Content Include="styles\onsenui.css" />
     <Folder Include="images\" />
+    <Content Include="lib\onsen\css\font_awesome\css\font-awesome.css" />
+    <Content Include="lib\onsen\css\font_awesome\css\font-awesome.min.css" />
+    <Content Include="lib\onsen\css\font_awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="lib\onsen\css\font_awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="lib\onsen\css\font_awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="lib\onsen\css\font_awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="lib\onsen\css\font_awesome\fonts\FontAwesome.otf" />
+    <Content Include="lib\onsen\css\ionicons\css\ionicons.css" />
+    <Content Include="lib\onsen\css\ionicons\css\ionicons.min.css" />
+    <Content Include="lib\onsen\css\ionicons\fonts\ionicons.eot" />
+    <Content Include="lib\onsen\css\ionicons\fonts\ionicons.svg" />
+    <Content Include="lib\onsen\css\ionicons\fonts\ionicons.ttf" />
+    <Content Include="lib\onsen\css\ionicons\fonts\ionicons.woff" />
+    <Content Include="lib\onsen\css\onsen-css-components-blue-basic-theme.css" />
+    <Content Include="lib\onsen\css\onsen-css-components-blue-theme.css" />
+    <Content Include="lib\onsen\css\onsen-css-components-dark-theme.css" />
+    <Content Include="lib\onsen\css\onsen-css-components-default.css" />
+    <Content Include="lib\onsen\css\onsen-css-components-purple-theme.css" />
+    <Content Include="lib\onsen\css\onsen-css-components-sunshine-theme.css" />
+    <Content Include="lib\onsen\css\onsen-css-components.css" />
+    <Content Include="lib\onsen\css\onsenui.css" />
+    <Content Include="lib\onsen\js\angular\angular-animate.js" />
+    <Content Include="lib\onsen\js\angular\angular-csp.css" />
+    <Content Include="lib\onsen\js\angular\angular-touch.js" />
+    <Content Include="lib\onsen\js\angular\angular.js" />
+    <Content Include="lib\onsen\js\angular\angular.min.js" />
+    <Content Include="lib\onsen\js\angular\angular.min.js.gzip" />
+    <Content Include="lib\onsen\js\angular\angular.min.js.map" />
+    <Content Include="lib\onsen\js\angular\bower.json" />
+    <Content Include="lib\onsen\js\angular\README.md" />
+    <Content Include="lib\onsen\js\onsenui.js" />
+    <Content Include="lib\onsen\js\onsenui.min.js" />
+    <Content Include="lib\onsen\js\onsenui_all.js" />
+    <Content Include="lib\onsen\js\onsenui_all.min.js" />
+    <Content Include="lib\onsen\stylus\blue-basic-theme.styl" />
+    <Content Include="lib\onsen\stylus\blue-theme.styl" />
+    <Content Include="lib\onsen\stylus\components\alert-dialog.styl" />
+    <Content Include="lib\onsen\stylus\components\button-bar.styl" />
+    <Content Include="lib\onsen\stylus\components\button.styl" />
+    <Content Include="lib\onsen\stylus\components\checkbox.styl" />
+    <Content Include="lib\onsen\stylus\components\dialog.styl" />
+    <Content Include="lib\onsen\stylus\components\global.styl" />
+    <Content Include="lib\onsen\stylus\components\index.styl" />
+    <Content Include="lib\onsen\stylus\components\list.styl" />
+    <Content Include="lib\onsen\stylus\components\modal.styl" />
+    <Content Include="lib\onsen\stylus\components\navigation-bar.styl" />
+    <Content Include="lib\onsen\stylus\components\notification.styl" />
+    <Content Include="lib\onsen\stylus\components\page.styl" />
+    <Content Include="lib\onsen\stylus\components\popover.styl" />
+    <Content Include="lib\onsen\stylus\components\radio-button.styl" />
+    <Content Include="lib\onsen\stylus\components\range.styl" />
+    <Content Include="lib\onsen\stylus\components\search-input.styl" />
+    <Content Include="lib\onsen\stylus\components\switch.styl" />
+    <Content Include="lib\onsen\stylus\components\tab-bar.styl" />
+    <Content Include="lib\onsen\stylus\components\text-input.styl" />
+    <Content Include="lib\onsen\stylus\components\textarea.styl" />
+    <Content Include="lib\onsen\stylus\components\toolbar-button.styl" />
+    <Content Include="lib\onsen\stylus\components\util.styl" />
+    <Content Include="lib\onsen\stylus\dark-theme.styl" />
+    <Content Include="lib\onsen\stylus\default.styl" />
+    <Content Include="lib\onsen\stylus\purple-theme.styl" />
+    <Content Include="lib\onsen\stylus\sunshine-theme.styl" />
     <Content Include="merges\android\scripts\android2.3-jscompat.js" />
     <Content Include="merges\android\scripts\platformOverrides.js" />
     <Folder Include="merges\ios\" />
@@ -127,13 +200,12 @@
     <Folder Include="res\screens\wp8\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="config.xml" >
+    <Content Include="config.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="index.html" />
     <Content Include="scripts\index.js" />
     <Content Include="scripts\platformOverrides.js" />
-    <Content Include="css\index.css" />
     <Content Include="res\icons\android\icon-36-ldpi.png" />
     <Content Include="res\icons\android\icon-48-mdpi.png" />
     <Content Include="res\icons\android\icon-72-hdpi.png" />
@@ -154,13 +226,13 @@
     <Content Include="res\icons\ios\icon-small-2x.png" />
     <Content Include="res\icons\windows\logo.png" />
     <Content Include="res\icons\windows\smalllogo.png" />
-	<Content Include="res\icons\windows\Square150x150Logo.scale-240.png" />
-	<Content Include="res\icons\windows\Square44x44Logo.scale-240.png" />
-	<Content Include="res\icons\windows\Square71x71Logo.scale-240.png" />
+    <Content Include="res\icons\windows\Square150x150Logo.scale-240.png" />
+    <Content Include="res\icons\windows\Square44x44Logo.scale-240.png" />
+    <Content Include="res\icons\windows\Square71x71Logo.scale-240.png" />
     <Content Include="res\icons\windows\storelogo.png" />
-	<Content Include="res\icons\windows\StoreLogo.scale-240.png" />
-	<Content Include="res\icons\windows\Wide310x150Logo.scale-240.png" />
-	<Content Include="res\icons\wp8\icon-62-tile.png" />
+    <Content Include="res\icons\windows\StoreLogo.scale-240.png" />
+    <Content Include="res\icons\windows\Wide310x150Logo.scale-240.png" />
+    <Content Include="res\icons\wp8\icon-62-tile.png" />
     <Content Include="res\icons\wp8\icon-173-tile.png" />
     <Content Include="res\native\android\ant.properties" />
     <Content Include="res\screens\android\screen-hdpi-landscape.png" />
@@ -179,7 +251,7 @@
     <Content Include="res\screens\ios\screen-iphone-portrait.png" />
     <Content Include="res\screens\ios\screen-iphone-portrait-2x.png" />
     <Content Include="res\screens\windows\splashscreen.png" />
-	<Content Include="res\screens\windows\SplashScreen.scale-240.png" />
+    <Content Include="res\screens\windows\SplashScreen.scale-240.png" />
     <Content Include="res\screens\wp8\screen-portrait.jpg" />
   </ItemGroup>
   <PropertyGroup>
@@ -196,7 +268,7 @@
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
     <TypeScriptSourceMap>false</TypeScriptSourceMap>
   </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)' == 'Distribution'">
+  <PropertyGroup Condition="'$(Configuration)' == 'Distribution'">
     <TypeScriptCompileOnSaveEnabled>false</TypeScriptCompileOnSaveEnabled>
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
     <TypeScriptSourceMap>false</TypeScriptSourceMap>
@@ -213,17 +285,13 @@
     <!-- These errors will trigger if building from inside Visual Studio and requirements could not be determined -->
     <Error Condition="$(MDAPropertiesEvaluated) == 'true' And $(NodeJsDir) == ''" Text="Path to NodeJs could not be determined. Please check that NodeJs has been installed." />
     <Error Condition="$(MDAPropertiesEvaluated) == 'true' And $(MDAVsixDir) == ''" Text="Path to the Visual Studio Extension for Tools for Apache Cordova could not be determined. Please check that the extension has been installed." />
-
     <!-- These errors will trigger if building from outside Visual Studio (e.g. command line) and environment variables have not been set -->
     <Error Condition="$(MDAPropertiesEvaluated) == '' And $(NodeJsDir) == ''" Text="Path to NodeJs has not been specified. Please check that NodeJs has been installed and set the NodeJsDir environment variable before building." />
     <Error Condition="$(MDAPropertiesEvaluated) == '' And $(MDAVsixDir) == ''" Text="Path to Visual Studio Extension for Tools for Apache Cordova has not been specified. Please install it and set the MDAVsixDir environment variable before building." />
-
     <!-- Sanity check that things exist in the specified places. These are more likely to fail if building outside Visual Studio and the required environment variables have not been set, or set incorrectly. -->
     <Error Condition="!Exists('$(NodeJsDir)') Or !Exists('$(NodeJsDir)\node.exe')" Text="The specified NodeJs directory $(NodeJsDir) either does not exist, or does not contain node.exe. Please check that NodeJs has been installed, and set the NodeJsDir variable to the correct directory." />
     <Error Condition="!Exists('$(MDAVsixDir)') Or !Exists('$(MDAVsixDir)\packages\vs-mda')" Text="The specified directory to the Visual Studio extension $(MDAVsixDir)\node.exe either does not exist, or does not contain a packages\vs-mda sub-directory. Please check that the extension directory exists and set the MDAVsixDir variable to the correct directory." />
-
     <!-- Installs (if necessary) the supporting Nodejs module -->
-    <Exec Command='"$(MDAVsixDir)"\packages\vs-mda\install "$(NodeJsDir)" "$(MDAVsixDir)"\packages\vs-mda'/>
+    <Exec Command="&quot;$(MDAVsixDir)&quot;\packages\vs-mda\install &quot;$(NodeJsDir)&quot; &quot;$(MDAVsixDir)&quot;\packages\vs-mda" />
   </Target>
-
 </Project>
