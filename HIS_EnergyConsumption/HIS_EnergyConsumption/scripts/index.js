@@ -19,10 +19,6 @@
         //make sure to embrace content functions with in an scope.$apply(function(){ content here });
         _app_scope = angular.element(document.body).scope();
 
-        _app_scope.$apply(function () {
-            _app_scope.doSomething();
-        });
-
         console.log("VanillaJS ready!");
     };
 

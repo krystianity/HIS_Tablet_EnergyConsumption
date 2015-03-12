@@ -2,6 +2,5 @@
 var _app_scope = null;
 
 var _config = {
-    "web_version": true,
-    "dennis" : false
+    "web_version": true
 };
