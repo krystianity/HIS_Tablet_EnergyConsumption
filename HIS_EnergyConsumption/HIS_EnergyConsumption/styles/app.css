@@ -82,3 +82,7 @@ font-size: 12px;
 color: #999;
 float: right;
 }
+.center {
+    text-align: center;
+}
+.liquidFillGaugeText { font-family: Helvetica; font-weight: bold; }

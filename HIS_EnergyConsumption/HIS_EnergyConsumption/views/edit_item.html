@@ -1,0 +1,56 @@
+﻿<ons-page>
+    <ons-row class="profile-wrapper">
+        <ons-col width="60px" class="profile-image-wrapper">
+            <div class="profile-image"></div>
+        </ons-col>
+        <ons-col>
+            <div class="profile-name">{{currentItem.id}}</div>
+            <div class="profile-email">{{currentItem.special}}</div>
+        </ons-col>
+    </ons-row>
+    <div class="settings-header">Choose the device's status</div>
+    <ons-list modifier="inset" class="settings-list">
+        <ons-list-item>
+            Active
+            <ons-switch modifier="list-item" ng-model="currentItem.active"></ons-switch>
+        </ons-list-item>
+        <ons-list-item>
+            Green
+            <ons-switch modifier="list-item" ng-model="currentItem.green" disabled></ons-switch>
+        </ons-list-item>
+    </ons-list>
+    <div class="settings-header">Choose the device's type</div>
+    <ons-list modifier="inset" class="settings-list">
+        <ons-list-item modifier="chevron">
+            Category: {{currentItem.category.name}} <select ng-model="currentItem.category" ng-options="model1 as model1.name for model1 in categories"></select>
+        </ons-list-item>
+
+        <ons-list-item modifier="chevron">
+            Type: {{currentItem.type.name}} <select ng-model="currentItem.type" ng-options="model2 as model2.name for model2 in types"></select>
+        </ons-list-item>
+
+        <br>
+
+        <ons-list-item modifier="chevron">
+            Wattage: {{currentItem.wattage}}
+        </ons-list-item>
+
+        <ons-list-item modifier="chevron">
+            Hours: {{currentItem.hours}}
+        </ons-list-item>
+
+        <br>
+
+        <ons-list-item modifier="chevron">
+            Extra Notes: <input type="text" ng-model="currentItem.extra" />
+        </ons-list-item>
+    </ons-list>
+    <br>
+    <ons-list modifier="inset" class="settings-list">
+        <ons-list-item modifier="tappable" ng-click="removeItemClick()" class="center">
+            <ons-icon icon="fa-times"></ons-icon>
+            Swipe Up to Save / Swipe Down to Delete
+        </ons-list-item>
+    </ons-list>
+    <br>
+</ons-page>

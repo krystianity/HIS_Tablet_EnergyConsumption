@@ -1,0 +1,36 @@
+﻿<ons-page>
+    <ons-toolbar>
+        <div class="left"></div>
+        <div class="center"><ons-toolbar-button ng-click="addItemClick()"><ons-icon icon="ion-compose"></ons-icon></ons-toolbar-button></div>
+        <div class="right"></div>
+    </ons-toolbar>
+    <ons-list style="margin: -1px 0">
+        <ons-list-item modifier="chevron" class="item" ng-repeat="item in items" ng-click="listItemClick(item.id)">
+            <ons-row>
+                <ons-col width="60px">
+                    <div class="item-thum"></div>
+                </ons-col>
+                <ons-col>
+                    <header>
+                        <span class="item-title">{{item.type.name}}</span>
+                        <span class="item-label">{{item.wattage}}</span>
+                        <span class="item-label">{{item.hours}}</span>
+                    </header>
+                    
+                    <p class="item-desc">Green:
+                        <ons-icon icon="fa-leaf" ng-show="item.green"></ons-icon>
+                        <ons-icon icon="fa-ban" ng-hide="item.green"></ons-icon>
+                    </p>
+
+                    <p class="item-desc">
+                        Active:
+                        <ons-icon icon="fa-flash" ng-show="item.active"></ons-icon>
+                        <ons-icon icon="fa-times" ng-hide="item.active"></ons-icon>
+                    </p>
+
+                    <p class="item-desc">{{item.extra}}</p>
+                </ons-col>
+            </ons-row>
+        </ons-list-item>
+    </ons-list>
+</ons-page>
