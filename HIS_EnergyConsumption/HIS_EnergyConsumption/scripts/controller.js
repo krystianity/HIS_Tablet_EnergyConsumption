@@ -29,7 +29,7 @@ angular.module('app').controller('AppController',
             //"slide", "simpleslide", "lift", "fade" and "none".
             anim = typeof anim === 'undefined' ? "none" : anim;
             $scope.navi.resetToPage($scope.config.view_dir + uri + $scope.config.view_format, {
-                "animation": anim,
+                "animation": "fade",
                 "onTransitionEnd": function () {
                     _onPageChange(uri);
                 }

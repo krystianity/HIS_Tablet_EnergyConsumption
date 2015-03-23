@@ -1,0 +1,18 @@
+﻿ [
+    {
+        "id": 1,
+        "name": "Washing",
+        "devices": [
+            { "id": 1, "name": "Washing Machine", "Green": false, "wattage": [ 800, 600, 500 ] },
+            { "id": 2, "name": "Dryer", "Green": false, "wattage": [ 1200, 900, 500 ] }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Kitchen",
+        "devices": [
+            { "id": 3, "name": "Hob", "Green": false, "wattage": [ 1200, 900, 500 ] },
+            { "id": 4, "name": "Oven", "Green": false, "wattage": [ 1200, 900, 500 ] }
+        ]
+    }
+]

@@ -56,5 +56,6 @@ var _config = {
         { "id" : "1" , "name" : "Dog" } , { "id" : "2" , "name" : "Cat" } , 
         { "id": "3", "name": "Bunny" }, { "id": "4", "name": "Frog" },
         { "id": "5", "name": "Banana" }
-    ]
+    ],
+
 };
