@@ -2,9 +2,13 @@
 var _app_scope = null;
 var _current_page = null;
 
+var _devices = [];
+var _days = []; //loaded in config.js from the json files
+
 var _config = {
     "web_version": true, //running a webbrowser?
-    "swipe_threshold": 50, //min. swipe distance that triggers swipe event
+    "swipe_threshold": 212, //min. swipe distance that triggers swipe event
+    "hold_threshold": 1250, //ms to raise a touch hold event
     "boot_page": "boot", //first view that is loaded on app start
     "boot_time": 1500, //time to fade out bootscreen
     "start_page": "raw_stats", //view that is shown after boot-screen
@@ -12,6 +16,9 @@ var _config = {
     "view_format": ".html",
     "item_view": "edit_item",
     "item_list": "manage_items",
+
+    "db_days_path": "db/days.json",
+    "db_devices_path": "db/devices.json",
 
     //takes care of swipe gesture navigation
     "navigation": {
@@ -45,17 +52,6 @@ var _config = {
             "up": "manage_items",
             "down": "manage_items"
         }
-    },
-    //category and type for the eleitems
-    "categories": [ 
-        { "id" : "1" , "name" : "Dog" } , { "id" : "2" , "name" : "Cat" } , 
-        { "id": "3", "name": "Bunny" }, { "id": "4", "name": "Frog" },
-        { "id": "5", "name": "Banana" }
-    ],
-    "types": [
-        { "id" : "1" , "name" : "Dog" } , { "id" : "2" , "name" : "Cat" } , 
-        { "id": "3", "name": "Bunny" }, { "id": "4", "name": "Frog" },
-        { "id": "5", "name": "Banana" }
-    ],
+    }
 
 };

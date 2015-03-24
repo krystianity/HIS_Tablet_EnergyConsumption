@@ -110,6 +110,9 @@
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="db\days.json" />
+    <Content Include="db\devices.json" />
+    <Content Include="scripts\bullet.js" />
     <Content Include="scripts\config.js" />
     <Content Include="scripts\controller.js" />
     <Content Include="scripts\EleItem.js" />

@@ -4,13 +4,26 @@ angular.module('app', ['onsen']);
 angular.module('app').controller('AppController',
     function ($scope) {
 
+        //configured data
         $scope.config = _config;
 
+        //current data
         $scope.currentItem = {};
+        $scope.currentCategory = {};
         $scope.items = [new EleItem(1), new EleItem(2), new EleItem(3)];
 
-        $scope.categories = $scope.config.categories;
-        $scope.types = $scope.config.types;
+        //data
+        $scope.devices = [];
+        $scope.days = [];
+
+        ///this data is loaded by index.js onAppStart from json files in the dp dir, it has to be applied later
+        ///
+        $scope.setDevices = function (devices, days) {
+            $scope.devices = devices;
+            console.log("added " + $scope.devices.length + " device categorie/s!");
+            $scope.days = days;
+            console.log("added " + $scope.days.length + " day/s!");
+        };
 
         ///changes the view(screen, page..) of the main controller - page stacking is skipped by resetToPage()
         ///
@@ -27,21 +40,34 @@ angular.module('app').controller('AppController',
             } */
 
             //"slide", "simpleslide", "lift", "fade" and "none".
-            anim = typeof anim === 'undefined' ? "none" : anim;
+            anim = typeof anim === 'undefined' ? "fade" : anim;
             $scope.navi.resetToPage($scope.config.view_dir + uri + $scope.config.view_format, {
-                "animation": "fade",
+                "animation": anim,
                 "onTransitionEnd": function () {
                     _onPageChange(uri);
                 }
             });
         };
 
+        
+
         ///if the user touches on one of the items in the manage_items view (list)
         ///
         $scope.listItemClick = function (itemId) {
             console.log("Clicked on ListItem " + itemId);
 
+            //$scope.currentItem = $scope.getItemById(itemId);
+            //$scope.changePage($scope.config.item_view, "lift");
+
+            //on a simple touch the active state of the item will switch
+            $scope.toggleItemState($scope.getItemById(itemId));
+        };
+
+        ///if the user touches and holds on one of the items in the manage_items view (list) - triggered by ontouchhold() in index.js
+        ///
+        $scope.listItemHold = function (itemId) {
             $scope.currentItem = $scope.getItemById(itemId);
+            //$scope.toggleItemState($scope.currentItem); //because listItemClick will be triggered before
             $scope.changePage($scope.config.item_view, "lift");
         };
 
@@ -50,7 +76,11 @@ angular.module('app').controller('AppController',
         $scope.addItemClick = function () {
             console.log("Clicked on Add Item");
 
-            var ni = new EleItem($scope.items.length);
+            var id = $scope.item.length;
+            if (id == 0) //if list is completely empty
+                id = 1;
+
+            var ni = new EleItem(id);
             $scope.currentItem = ni;
             $scope.items.push(ni);
 
@@ -75,6 +105,13 @@ angular.module('app').controller('AppController',
                     return $scope.items[i];
                 }
             }
+        };
+
+        $scope.toggleItemState = function (i) {
+            if (i.active)
+                i.active = false;
+            else
+                i.active = true;
         };
 
         console.log("AngularJS Scope ready!");

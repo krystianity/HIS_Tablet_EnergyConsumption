@@ -4,46 +4,35 @@
             <div class="profile-image"></div>
         </ons-col>
         <ons-col>
-            <div class="profile-name">{{currentItem.id}}</div>
-            <div class="profile-email">{{currentItem.special}}</div>
+            <div class="profile-name">Nr. {{currentItem.id}}</div>
+            <div class="profile-email">{{currentItem.device.name}} / {{currentItem.category.name}}</div>
         </ons-col>
     </ons-row>
-    <div class="settings-header">Choose the device's status</div>
-    <ons-list modifier="inset" class="settings-list">
-        <ons-list-item>
-            Active
-            <ons-switch modifier="list-item" ng-model="currentItem.active"></ons-switch>
-        </ons-list-item>
-        <ons-list-item>
-            Green
-            <ons-switch modifier="list-item" ng-model="currentItem.green" disabled></ons-switch>
-        </ons-list-item>
-    </ons-list>
-    <div class="settings-header">Choose the device's type</div>
+   
     <ons-list modifier="inset" class="settings-list">
         <ons-list-item modifier="chevron">
-            Category: {{currentItem.category.name}} <select ng-model="currentItem.category" ng-options="model1 as model1.name for model1 in categories"></select>
+            Category: <select ng-model="currentItem.category" ng-options="cat1 as cat1.name for cat1 in devices" ng-change="onCategorySelect()"></select>
         </ons-list-item>
 
         <ons-list-item modifier="chevron">
-            Type: {{currentItem.type.name}} <select ng-model="currentItem.type" ng-options="model2 as model2.name for model2 in types"></select>
+            Device: <select ng-model="currentItem.device" ng-options="dev1 as dev1.name for dev1 in currentItem.category.devices"></select>
         </ons-list-item>
 
+        <ons-list-item modifier="chevron">
+            Age: {{currentItem.age_str}} <input type="range" class="range" ng-model="currentItem.age_num" min=-1 max=1 ng-change="currentItem.updateAgeStr()">
+        </ons-list-item>
+        
         <br>
 
         <ons-list-item modifier="chevron">
-            Wattage: {{currentItem.wattage}}
+            Wattage: {{currentItem.getWattage}}
         </ons-list-item>
 
         <ons-list-item modifier="chevron">
-            Hours: {{currentItem.hours}}
+            Hours: {{currentItem.hours}} <input type="range" class="range" ng-model="currentItem.hours" min=1 max=24>
+             - W/H per day:{{currentItem.getConsumption}}
         </ons-list-item>
 
-        <br>
-
-        <ons-list-item modifier="chevron">
-            Extra Notes: <input type="text" ng-model="currentItem.extra" />
-        </ons-list-item>
     </ons-list>
     <br>
    <!-- <ons-list modifier="inset" class="settings-list">
