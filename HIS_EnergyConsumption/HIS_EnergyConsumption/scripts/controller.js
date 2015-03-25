@@ -1,4 +1,20 @@
-﻿/* Main Angular JS Controller File */
+﻿/*
+   Copyright 2015 Dennis Stodko, Christian Fröhlingsdorf
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+
+/* Main Angular JS Controller File */
 angular.module('app', ['onsen']);
 
 angular.module('app').controller('AppController',
@@ -10,6 +26,7 @@ angular.module('app').controller('AppController',
         //current data
         $scope.currentItem = {};
         $scope.currentCategory = {};
+        $scope.removeItemSwipe = false;
         $scope.items = [new EleItem(1), new EleItem(2), new EleItem(3)];
 
         //data
@@ -20,8 +37,10 @@ angular.module('app').controller('AppController',
         ///
         $scope.setDevices = function (devices, days) {
             $scope.devices = devices;
+            console.log(devices);
             console.log("added " + $scope.devices.length + " device categorie/s!");
             $scope.days = days;
+            console.log(days);
             console.log("added " + $scope.days.length + " day/s!");
         };
 
@@ -49,8 +68,6 @@ angular.module('app').controller('AppController',
             });
         };
 
-        
-
         ///if the user touches on one of the items in the manage_items view (list)
         ///
         $scope.listItemClick = function (itemId) {
@@ -67,6 +84,7 @@ angular.module('app').controller('AppController',
         ///
         $scope.listItemHold = function (itemId) {
             $scope.currentItem = $scope.getItemById(itemId);
+            $scope.removeItemSwipe = false; //and reset delete state
             //$scope.toggleItemState($scope.currentItem); //because listItemClick will be triggered before
             $scope.changePage($scope.config.item_view, "lift");
         };
@@ -76,20 +94,26 @@ angular.module('app').controller('AppController',
         $scope.addItemClick = function () {
             console.log("Clicked on Add Item");
 
-            var id = $scope.item.length;
-            if (id == 0) //if list is completely empty
-                id = 1;
-
-            var ni = new EleItem(id);
+            var ni = new EleItem($scope.getNextItemId());
             $scope.currentItem = ni;
             $scope.items.push(ni);
 
+            $scope.removeItemSwipe = false; //and reset delete state
             $scope.changePage($scope.config.item_view, "lift");
         };
 
         ///if the user touches the delete button on the edit_item view / can also be triggered by swipe down through onSwipe()
         ///
         $scope.removeItemClick = function () {
+
+            /* has to be triggered twice *update* */
+            if (!$scope.removeItemSwipe) {
+                //swipes for the first time, show a message
+                $scope.removeItemSwipe = true; //message will appear if this is true
+                return; //cancle further steps
+            }
+            //if its already true, we just continue and delete the item
+
             var index = $scope.items.indexOf($scope.currentItem);
             $scope.items.splice(index, 1);
             $scope.currentItem = null;
@@ -107,11 +131,27 @@ angular.module('app').controller('AppController',
             }
         };
 
+        ///toggles the active state of an item
+        ///
         $scope.toggleItemState = function (i) {
             if (i.active)
                 i.active = false;
             else
                 i.active = true;
+        };
+
+        ///returns the next possible id for the creation of a new item
+        ///
+        $scope.getNextItemId = function () {
+            var hId = 1;
+            for (var i = 0; i < $scope.items.length; i++) {
+                if ($scope.items[i].id == hId)
+                    hId++;
+                else if ($scope.items[i].id > hId)
+                    hId = $scope.items[i].id + 1;
+            }
+
+            return hId;
         };
 
         console.log("AngularJS Scope ready!");

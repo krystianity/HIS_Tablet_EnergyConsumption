@@ -3,16 +3,42 @@
         "id": 1,
         "name": "Washing",
         "devices": [
-            { "id": 1, "name": "Washing Machine", "Green": false, "wattage": [ 800, 600, 500 ] },
-            { "id": 2, "name": "Dryer", "Green": false, "wattage": [ 1200, 900, 500 ] }
+            { "id": 10, "name": "Washing Machine", "wattage": [ 2500, 2000, 1500, 1000, 800, 700, 500 ] },
+            { "id": 11, "name": "Tumble Dryer", "wattage": [ 3500, 3000, 2500, 2000, 1800, 1500, 1200 ] }
         ]
     },
     {
         "id": 2,
         "name": "Kitchen",
         "devices": [
-            { "id": 3, "name": "Hob", "Green": false, "wattage": [ 1200, 900, 500 ] },
-            { "id": 4, "name": "Oven", "Green": false, "wattage": [ 1200, 900, 500 ] }
+            { "id": 20, "name": "Hob", "wattage": [ 4000, 3000, 2000, 1000, 800, 700, 600 ] },
+            { "id": 21, "name": "Oven", "wattage": [ 5000, 4000, 3600, 2400, 1800, 1500, 1300 ] },
+            { "id": 22, "name": "Fridge/Freezer", "wattage": [ 150, 120, 100, 80, 50, 40, 20 ] },
+            { "id": 23, "name": "Microwave", "wattage": [ 1800, 1400, 1200, 1000, 800, 650, 500 ] }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Lighting",
+        "devices": [
+            { "id": 30, "name": "Big Light", "wattage": [ 600, 400, 300, 200, 100, 50, 25 ] },
+            { "id": 31, "name": "Small Light", "wattage": [ 300, 200, 150, 100, 50, 25, 15 ] }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "Mulimedia",
+        "devices": [
+            { "id": 40, "name": "TV", "wattage": [ 1000, 600, 400, 200, 100, 80, 50 ] },
+            { "id": 41, "name": "Radio", "wattage": [ 300, 200, 100, 50, 40, 35, 20 ] }
+        ]
+    },
+    {
+        "id": 5,
+        "name": "Computer",
+        "devices": [
+            { "id": 50, "name": "Desktop Computer", "wattage": [ 1000, 800, 600, 400, 200, 150, 100 ] },
+            { "id": 51, "name": "Laptop", "wattage": [ 300, 200, 100, 80, 60, 45, 30 ] }
         ]
     }
 ]

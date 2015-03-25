@@ -1,4 +1,19 @@
-﻿<ons-page>
+﻿<!--
+   Copyright 2015 Dennis Stodko, Christian Fröhlingsdorf
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<ons-page>
     <ons-row class="profile-wrapper">
         <ons-col width="60px" class="profile-image-wrapper">
             <div class="profile-image"></div>
@@ -10,36 +25,41 @@
     </ons-row>
    
     <ons-list modifier="inset" class="settings-list">
-        <ons-list-item modifier="chevron">
+        <ons-list-item>
             Category: <select ng-model="currentItem.category" ng-options="cat1 as cat1.name for cat1 in devices" ng-change="onCategorySelect()"></select>
         </ons-list-item>
 
-        <ons-list-item modifier="chevron">
+        <ons-list-item>
             Device: <select ng-model="currentItem.device" ng-options="dev1 as dev1.name for dev1 in currentItem.category.devices"></select>
         </ons-list-item>
 
-        <ons-list-item modifier="chevron">
-            Age: {{currentItem.age_str}} <input type="range" class="range" ng-model="currentItem.age_num" min=-1 max=1 ng-change="currentItem.updateAgeStr()">
-        </ons-list-item>
-        
-        <br>
-
-        <ons-list-item modifier="chevron">
-            Wattage: {{currentItem.getWattage}}
+        <ons-list-item>
+            Age: {{currentItem.age_str}} <input type="range" class="range" ng-model="currentItem.age_num" min=1 max=7 ng-change="currentItem.updateAgeStr()">
         </ons-list-item>
 
-        <ons-list-item modifier="chevron">
+        <ons-list-item>
             Hours: {{currentItem.hours}} <input type="range" class="range" ng-model="currentItem.hours" min=1 max=24>
              - W/H per day:{{currentItem.getConsumption}}
         </ons-list-item>
 
+        <ons-list-item>
+            Wattage: {{currentItem.getWattage}}
+        </ons-list-item>
+
+        <ons-list-item>
+            Description: <input type="text" ng-model="currentItem.description" />
+        </ons-list-item>
+
     </ons-list>
     <br>
-   <!-- <ons-list modifier="inset" class="settings-list">
-        <ons-list-item modifier="tappable" ng-click="removeItemClick()" class="center">
+   <ons-list modifier="inset" class="settings-list">
+        <!-- <ons-list-item modifier="tappable" ng-click="removeItemClick()" class="center">
             <ons-icon icon="fa-times"></ons-icon>
             Swipe Up to Save / Swipe Down to Delete
-        </ons-list-item>
-    </ons-list> -->
+        </ons-list-item> -->
+       <ons-list-item ng-show="removeItemSwipe" class="warning">
+           Swipe UP again if you really want to delete this device! Swipe DOWN to save.
+       </ons-list-item>
+    </ons-list>
     <br>
 </ons-page>

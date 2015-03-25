@@ -115,7 +115,9 @@
     <Content Include="scripts\bullet.js" />
     <Content Include="scripts\config.js" />
     <Content Include="scripts\controller.js" />
-    <Content Include="scripts\EleItem.js" />
+    <Content Include="scripts\eleItem.js" />
+    <Content Include="scripts\hslRGB.js" />
+    <Content Include="scripts\viscalc.js" />
     <Content Include="scripts\visualisation.js" />
     <Content Include="styles\app.css" />
     <Content Include="styles\onsen-css-components-blue-basic-theme.css" />
@@ -129,8 +131,10 @@
     <Content Include="views\boot.html" />
     <Content Include="views\edit_item.html" />
     <Content Include="views\green_stats.html" />
+    <Content Include="views\green_stats_second.html" />
     <Content Include="views\manage_items.html" />
     <Content Include="views\raw_stats.html" />
+    <Content Include="views\raw_stats_second.html" />
     <Folder Include="images\" />
     <Content Include="lib\onsen\css\font_awesome\css\font-awesome.css" />
     <Content Include="lib\onsen\css\font_awesome\css\font-awesome.min.css" />

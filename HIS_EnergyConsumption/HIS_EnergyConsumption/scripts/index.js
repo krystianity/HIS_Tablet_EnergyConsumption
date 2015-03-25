@@ -1,4 +1,20 @@
-﻿/* Vanilla JS App File */
+﻿/*
+   Copyright 2015 Dennis Stodko, Christian Fröhlingsdorf
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+
+/* Vanilla JS App File */
 (function () {
     "use strict";
 
@@ -7,6 +23,10 @@
         //it is otherwise only called by Cordova on Mobile Devices (non Browsers..)
         //$("#cordova-script").remove();
         $(onDeviceReady);
+
+        if (detectIE()) {
+            alert("Please, run this App in a modern Browser e.g. Chrome!");
+        }
     }
 
     document.addEventListener('deviceready', onDeviceReady.bind(this), false);
@@ -30,7 +50,13 @@
         $.mobile.loading().remove();
         $.mobile.ajaxEnabled = false;
         $.event.special.tap.tapholdThreshold = _config.hold_threshold;
-        $("html").bind("taphold", onTouchHold.bind(this));
+
+        if(!detectIE())
+            $("html").on("taphold", onTouchHold.bind(this));
+        else {
+            console.log("detected IE will use doubleclick isntead of taphold");
+            $("html").dblclick(onTouchHold.bind(this));
+        }
 
         console.log("VanillaJS ready!");
 
@@ -72,21 +98,25 @@
 
     function onTouchHold(event) {
         console.log("touch-hold!");
-        //try to find the closest item of class _il_, an item from the manageable list
-        var _it = $(event.target).closest("._il_");
-        if(!_it)
-            return;
+        try {
+            //try to find the closest item of class _il_, an item from the manageable list
+            var _it = $(event.target).closest("._il_");
+            if(!_it || typeof _it === "undefined")
+                return;
 
-        //get its id and split to the itemId        
-        var itemId = ($(_it).attr("id").split("_il_"))[1];
-        var itemNum = parseInt(itemId) || 0;
+            //get its id and split to the itemId        
+            var itemId = ($(_it).attr("id").split("_il_"))[1];
+            var itemNum = parseInt(itemId) || 0;
 
-        //test if the itemId is an int and fire scope event
-        if (itemNum !== 0) {
-            console.log("touch-hold on item " + itemId);
-            _app_scope.$apply(function () {
-                _app_scope.listItemHold(itemNum);
-            });
+            //test if the itemId is an int and fire scope event
+            if (itemNum !== 0) {
+                console.log("touch-hold on item " + itemId);
+                _app_scope.$apply(function () {
+                    _app_scope.listItemHold(itemNum);
+                });
+            }
+        } catch (err) {
+            console.log("touch-hold aborted with error!");
         }
     };
 
@@ -168,31 +198,43 @@
 ///called by $scope, apply any page related calls here
 ///
 function _onPageChange(uri) {
+    var last_page = _current_page;
     _current_page = uri;
-    console.log("Changed page to " + uri);
+    console.log("Page movement: " + uri + "->" + last_page);
 
-    var bul = [
-  { "title": "Revenue", "subtitle": "US$, in thousands", "ranges": [150, 225, 300], "measures": [220, 270], "markers": [250] },
-  { "title": "Profit", "subtitle": "%", "ranges": [20, 25, 30], "measures": [21, 23], "markers": [26] },
-  { "title": "Order Size", "subtitle": "US$, average", "ranges": [350, 500, 600], "measures": [100, 320], "markers": [550] },
-  { "title": "New Customers", "subtitle": "count", "ranges": [1400, 2000, 2500], "measures": [1000, 1650], "markers": [2100] },
-  { "title": "Satisfaction", "subtitle": "out of 5", "ranges": [3.5, 4.25, 5], "measures": [3.2, 4.7], "markers": [4.4] }
-    ];
+    //reset scrolling on all pages
+    $("html").swipe("option", "allowPageScroll", "none");
+
+    /* running the viscalc.js functions to generate data for the d3.js visualisations
+    on the single pages */
 
     switch (uri) {
-        case _config.start_page:
+        case "raw_stats":
             console.log("Drawing liquids..");
-            v_drawLiquids();
+            v_drawLiquids(vc_getLiquidsData(_app_scope.items));
+            break;
+
+        case "raw_stats_second":
+            console.log("Drawing wheel..");
+            $("#wheel-body").empty();
+            v_drawWheel(vc_getWheelData(_devices, _days));
             break;
 
         case "green_stats":
             console.log("Drawing pie..");
             $("pie-body").empty();
-            v_drawPie();
+            v_drawPie(vc_getPieData(_app_scope.items));
+            break;
 
+        case "green_stats_second":
             console.log("Drawing bar..");
             $("#bar-body").empty();
-            v_drawBars("#bar-body", bul);
+            v_drawBars("#bar-body", vc_getBarData(_app_scope.items));
+            break;
+
+        case "manage_items":
+            //allow vertical scrolling on manage item list
+            $("html").swipe("option", "allowPageScroll", "vertical");
             break;
 
         default: break;
@@ -204,9 +246,9 @@ function _onPageChange(uri) {
 function _specialCaseSwiping(direction) {
 
     if (_current_page == _config.item_view) {
-        if (direction == "up") {
+        if (direction == _config.navigation.item_save) {
             //saving item here a. doing nothing ;)
-        } else if (direction == "down") {
+        } else if (direction == _config.navigation.item_delete) {
             //down swipe on the item detail view means bye bye item (a. deleting the item)
             _app_scope.$apply(function () {
                 _app_scope.removeItemClick(); //changes page as well
@@ -217,4 +259,33 @@ function _specialCaseSwiping(direction) {
     }
 
     return false; //continue with common onSwipe() event
+}
+
+
+///returns version of IE or false, if browser is not Internet Explorer
+///
+function detectIE() {
+    var ua = window.navigator.userAgent;
+
+    var msie = ua.indexOf('MSIE ');
+    if (msie > 0) {
+        // IE 10 or older => return version number
+        return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+    }
+
+    var trident = ua.indexOf('Trident/');
+    if (trident > 0) {
+        // IE 11 => return version number
+        var rv = ua.indexOf('rv:');
+        return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+    }
+
+    var edge = ua.indexOf('Edge/');
+    if (edge > 0) {
+        // IE 12 => return version number
+        return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
+    }
+
+    // other browser
+    return false;
 }

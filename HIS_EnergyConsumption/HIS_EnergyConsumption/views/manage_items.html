@@ -1,10 +1,26 @@
-﻿<ons-page>
+﻿<!--
+   Copyright 2015 Dennis Stodko, Christian Fröhlingsdorf
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<ons-page>
     <ons-toolbar>
         <div class="left"></div>
         <div class="center"><ons-toolbar-button ng-click="addItemClick()"><ons-icon icon="ion-compose"></ons-icon></ons-toolbar-button></div>
         <div class="right"></div>
     </ons-toolbar>
-    <ons-list style="margin: -1px 0">
+    <ons-scroller>
+    <ons-list id="mil" style="margin: -1px 0">
         <ons-list-item modifier="chevron" class="item _il_" ng-repeat="item in items" ng-click="listItemClick(item.id)" id="_il_{{item.id}}">
             <ons-row>
                 <ons-col width="60px">
@@ -12,23 +28,25 @@
                 </ons-col>
                 <ons-col>
                     <header>
-                        <span class="item-title">{{item.category.name}}</span>
                         <span class="item-title">{{item.device.name}}</span>
-                        <span class="item-title">{{item.getConsumption}}</span>
+                        <span class="item-title"> / {{item.description}}</span>
                     </header>
                     
                     <p class="item-desc">Green:
-                        <ons-icon icon="fa-leaf" ng-show="item.device.Green"></ons-icon>
-                        <ons-icon icon="fa-ban" ng-hide="item.device.Green"></ons-icon>
+                        <ons-icon icon="fa-leaf" ng-show="item.isGreen"></ons-icon>
+                        <ons-icon icon="fa-ban" ng-hide="item.isGreen"></ons-icon>
+                        <span class="item-title"> / Consumption: {{item.getConsumption}}</span>
                     </p>
 
                     <p class="item-desc">
                         Active:
                         <ons-icon icon="fa-flash" ng-show="item.active"></ons-icon>
                         <ons-icon icon="fa-times" ng-hide="item.active"></ons-icon>
+                        <span class="item-title"> / Device: {{item.category.name}}</span>
                     </p>
                 </ons-col>
             </ons-row>
         </ons-list-item>
     </ons-list>
+    </ons-scroller>
 </ons-page>
