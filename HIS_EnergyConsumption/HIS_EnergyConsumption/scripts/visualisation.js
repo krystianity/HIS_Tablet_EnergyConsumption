@@ -316,15 +316,15 @@ function v_drawWheel(json) {
         if(d.depth == 0){
             deactivateCircles([3, 4]);
         } else if (d.depth == 1) {
+		 deactivateCircles([4]);
+		 $(".circlet-3").css("font", "9px sans-serif");
             setTimeout(function () {
                 activateCircles([3]);
-                deactivateCircles([4]);
-                $("#wheel-body text").css("font", "9px sans-serif");
             }, duration - 100);
         } else {
             setTimeout(function () {
                 activateCircles([3, 4]);
-                $("#wheel-body text").css("font", "14px sans-serif");
+                $(".circlet-3").css("font", "14px sans-serif");
             }, duration - 100);
         }
     }
