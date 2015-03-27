@@ -58,12 +58,17 @@ function vc_getUnusedRandomHex() {
     return c;
 };
 
+///3s (size, max)
+///
+function vc_perc(x, f) {
+    return x / f * 100; //dreisatz
+}
 
 ///calculates a hex color for a give size
 ///
 function vc_getColorFromSize(size, max) {
 
-    var p = 100 - perc(size, max);
+    var p = 100 - vc_perc(size, max);
     var prgb = numberToColorHsl(p);
     return rgbToHex(prgb[0], prgb[1], prgb[2]);
 
@@ -85,10 +90,6 @@ function vc_getColorFromSize(size, max) {
         n = Math.max(0, Math.min(n, 255));
         return "0123456789ABCDEF".charAt((n - n % 16) / 16)
              + "0123456789ABCDEF".charAt(n % 16);
-    }
-
-    function perc(x, f) {
-        return x / f * 100; //dreisatz
     }
 };
 
@@ -158,54 +159,72 @@ function vc_getWheelData(devices, days) {
         }
     }
 
-    console.log(JSON.stringify(weeks));
+    //console.log(JSON.stringify(weeks));
 
     return weeks;
 };
 
 ///calculate array for v_drawPie using the items of the scope
 ///
-function vc_getPieData(items) {
-
-    var color = d3.scale.ordinal()
-       .domain(["Lorem ipsum", "dolor sit", "amet", "consectetur", "adipisicing", "elit", "sed", "do", "eiusmod", "tempor", "incididunt"])
-       .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
-
-    return color;
-};
-
-///calculate array for v_drawPie using the items of the scope
-///
 function vc_getLiquidsData(items) {
 
-    var liquids = [];
+    if (!vc_ca(items))
+        return [];
 
     var config1 = liquidFillGaugeDefaultSettings();
     config1.circleColor = "#FF7777";
     config1.textColor = "#FF4444";
     config1.waveTextColor = "#FFAAAA";
     config1.waveColor = "#FFDDDD";
-    config1.circleThickness = 0.2;
-    config1.textVertPosition = 0.2;
+    config1.textVertPosition = 0.8;
     config1.waveAnimateTime = 1000;
+    config1.waveHeight = 0.05;
+    config1.waveAnimate = true;
+    config1.waveRise = true;
+    config1.waveOffset = 0.25;
+    config1.textSize = 0.75;
+    config1.waveCount = 3;
+    config1.circleThickness = 0.15;
 
-    var config4 = liquidFillGaugeDefaultSettings();
-    config4.circleThickness = 0.15;
-    config4.circleColor = "#808015";
-    config4.textColor = "#555500";
-    config4.waveTextColor = "#FFFFAA";
-    config4.waveColor = "#AAAA39";
-    config4.textVertPosition = 0.8;
-    config4.waveAnimateTime = 1000;
-    config4.waveHeight = 0.05;
-    config4.waveAnimate = true;
-    config4.waveRise = false;
-    config4.waveOffset = 0.25;
-    config4.textSize = 0.75;
-    config4.waveCount = 3;
+    var config2 = liquidFillGaugeDefaultSettings();
+    config2.circleThickness = 0.15;
+    config2.circleColor = "#808015";
+    config2.textColor = "#555500";
+    config2.waveTextColor = "#FFFFAA";
+    config2.waveColor = "#AAAA39";
+    config2.textVertPosition = 0.8;
+    config2.waveAnimateTime = 1000;
+    config2.waveHeight = 0.05;
+    config2.waveAnimate = true;
+    config2.waveRise = true;
+    config2.waveOffset = 0.25;
+    config2.textSize = 0.75;
+    config2.waveCount = 3;
 
-    liquids.push({ "id": "fillgauge1", "fill": 55, "config": config1 });
-    liquids.push({ "id": "fillgauge2", "fill": 60.44, "config": config4 });
+    var liquids = [];
+
+    var runt_h = 0;
+    var cons_h = 0;
+    for (var i = 0; i < items.length; i++) {
+
+        runt_h = vc_perc(items[i].hours, 24);
+
+        de_max = items[i].device.wattage[0];
+        de_cur = items[i].device.wattage[items[i].age_num - 1];
+        cons_h = vc_perc(de_cur, de_max);
+
+        liquids.push({
+            "id": "fillgauge_" + items[i].id + "_1",
+            "fill": runt_h,
+            "config": config2
+        });
+
+        liquids.push({
+            "id": "fillgauge_" + items[i].id + "_2",
+            "fill": cons_h,
+            "config": config1
+        });
+    }
 
     return liquids;
 };
@@ -214,13 +233,78 @@ function vc_getLiquidsData(items) {
 ///
 function vc_getBarData(items) {
 
-    var bul = [
-     { "title": "Revenue", "subtitle": "US$, in thousands", "ranges": [150, 225, 300], "measures": [220, 270], "markers": [250] },
-     { "title": "Profit", "subtitle": "%", "ranges": [20, 25, 30], "measures": [21, 23], "markers": [26] },
-     { "title": "Order Size", "subtitle": "US$, average", "ranges": [350, 500, 600], "measures": [100, 320], "markers": [550] },
-     { "title": "New Customers", "subtitle": "count", "ranges": [1400, 2000, 2500], "measures": [1000, 1650], "markers": [2100] },
-     { "title": "Satisfaction", "subtitle": "out of 5", "ranges": [3.5, 4.25, 5], "measures": [3.2, 4.7], "markers": [4.4] }
-    ];
+    if(!vc_ca(items))
+        return [];
 
-    return bul;
+    var bars = []; //current consumption
+    var bars2 = []; //saving potential
+
+    var v = 0;
+    var p = 0;
+    var pot = 0;
+    var wattages = [];
+    for (var i = 0; i < items.length; i++) {
+
+        if (!items[i].device.id)
+            continue;
+
+        v = items[i].hours * items[i].device.wattage[parseInt(items[i].age_num) - 1]; //current real consumption
+        p = items[i].hours * items[i].device.wattage[6]; //lowest consumption A+++ device
+        pot = v - p;
+       
+        wattages = items[i].device.wattage.slice(); //create a copy of the array
+        wattages.reverse(); //reverse copy
+
+        bars.push({
+            "title": items[i].device.name,
+            "subtitle": items[i].description,
+            "ranges": wattages,
+            "measures": [items[i].device.wattage[parseInt(items[i].age_num) - 1]],
+            "markers": [0],
+            "potential": pot
+        });
+    }
+
+    //sort for view
+    bars = _.sortBy(bars, function (dev) { return dev.measures[0]; });
+    bars.reverse();
+
+    var max = 0;
+    for (var i = 0; i < items.length; i++) {
+
+        if (!items[i].device.id)
+            continue;
+
+        v = items[i].hours * items[i].device.wattage[parseInt(items[i].age_num) - 1]; //current real consumption
+        p = items[i].hours * items[i].device.wattage[6]; //lowest consumption A+++ device
+        pot = v - p;
+
+        if (pot < 0) {
+            console.log(items[i].device.wattage);
+            console.log(parseInt(items[i].age_num) - 1);
+            console.log(pot);
+        }
+
+        if(v > max)
+            max = v;
+
+        bars2.push({
+            "title": items[i].device.name,
+            "subtitle": items[i].description,
+            "ranges": [v],
+            "measures": [pot],
+            "markers": [0],
+            "potential": pot
+        });
+    }
+
+    //add max pot
+    for (var i = 0; i < bars2.length; i++)
+        bars2[i].ranges[0] = max;
+
+    //sort for view
+    bars2 = _.sortBy(bars2, function (dev) { return dev.potential; });
+    bars2.reverse();
+
+    return [bars, bars2];
 };

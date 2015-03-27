@@ -14,21 +14,36 @@
    limitations under the License.
 */
 
-function EleItem(id) {
-    this.id = id;
+function EleItem(id, item) {
+    if (typeof item === "undefined") {
+        this.id = id;
 
-    this.active = true;
-    this.hours = 0;
-    this.age_num = 1;
-    this.age_str = "D";
-    this.description = "no description";
+        this.active = true;
+        this.hours = 0;
+        this.age_num = 1;
+        this.age_str = "D";
+        this.description = "";
 
-    this.device = {};
-    this.category = {};
+        this.device = {};
+        this.category = {};
+
+    } else {
+        //load existing item but add getters
+        this.id = item.id;
+        this.active = item.active;
+        this.hours = item.hours;
+        this.age_num = item.age_num;
+        this.age_str = item.age_str;
+        this.description = item.description;
+        this.device = item.device;
+        this.category = item.category;
+    }
 
     _addEleItemConsumptionGetter(this);
     _addEleWattageGetter(this);
     _addEleIsGreen(this);
+    _addEleEffImg(this);
+    _addEleIconImg(this);
 };
 
 EleItem.prototype.updateAgeStr = function () {
@@ -77,6 +92,25 @@ function _addEleIsGreen(_o) {
                 else
                     return false;
             }
+        }
+    });
+};
+
+function _addEleEffImg(_o) {
+    Object.defineProperty(_o, "getEffImage", {
+        get: function getEffImage() {
+            return "images/ratings/rating_" + this.age_num + ".png";
+        }
+    });
+};
+
+function _addEleIconImg(_o) {
+    Object.defineProperty(_o, "getIconImage", {
+        get: function getIconImage() {
+            if (!this.device)
+                return null;
+
+            return "images/devices/" + this.device.id + ".png";
         }
     });
 };

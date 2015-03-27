@@ -27,20 +27,21 @@ angular.module('app').controller('AppController',
         $scope.currentItem = {};
         $scope.currentCategory = {};
         $scope.removeItemSwipe = false;
-        $scope.items = [new EleItem(1), new EleItem(2), new EleItem(3)];
+        $scope.items = [];
 
         //data
         $scope.devices = [];
         $scope.days = [];
+        $scope.dayView = true; //day 'n' night
 
         ///this data is loaded by index.js onAppStart from json files in the dp dir, it has to be applied later
         ///
         $scope.setDevices = function (devices, days) {
             $scope.devices = devices;
-            console.log(devices);
+            //console.log(devices);
             console.log("added " + $scope.devices.length + " device categorie/s!");
             $scope.days = days;
-            console.log(days);
+            //console.log(days);
             console.log("added " + $scope.days.length + " day/s!");
         };
 
@@ -154,5 +155,53 @@ angular.module('app').controller('AppController',
             return hId;
         };
 
+        ///saves $scope.items in localStorage
+        ///
+        $scope.saveItems = function () {
+            if (localStorage) {
+                localStorage.savedItems = angular.toJson($scope.items);
+                console.log("saved: " + localStorage.savedItems);
+            } else {
+                console.log("couldnt save items!");
+            }
+        };
+
+        ///loads $scope.items from localStorage
+        ///
+        $scope.loadItems = function (json) {
+
+            if (typeof json === "undefined") {
+                if (localStorage && localStorage.savedItems) {
+                    $scope.items = JSON.parse(localStorage.savedItems);
+
+                    //re-assign getters
+                    for (var i = 0; i < $scope.items.length; i++) {
+                        $scope.items[i] = new EleItem(null, $scope.items[i]);
+                    }
+
+                    console.log("loaded: " + JSON.stringify($scope.items));
+                } else {
+                    console.log("couldnt load items!");
+                }
+            } else {
+                $scope.items = json;
+                //re-assign getters
+                for (var i = 0; i < $scope.items.length; i++) {
+                    $scope.items[i] = new EleItem(null, $scope.items[i]);
+                }
+                console.log("loaded from json: " + JSON.stringify($scope.items));
+            }
+        };
+
+        ///toggles day and night view (css changes are related to the dayView property)
+        ///
+        $scope.toggleDayNightView = function () {
+            if ($scope.dayView)
+                $scope.dayView = false;
+            else
+                $scope.dayView = true;
+        };
+
+        $scope.loadItems(); //load items on start
         console.log("AngularJS Scope ready!");
 });

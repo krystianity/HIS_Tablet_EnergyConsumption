@@ -118,22 +118,41 @@ stroke: black;
 stroke-width: 2px;
 fill: none;
 }
-#bar-body {
+#bar-body, #bar-body2 {
 margin: auto;
 padding-top: 40px;
 position: relative;
 width: 100%;
 }
-.bullet { font: 10px sans-serif; }
-.bullet .marker { stroke: #000; stroke-width: 2px; }
-.bullet .tick line { stroke: #666; stroke-width: .5px; }
-.bullet .range.s0 { fill: #eee; }
-.bullet .range.s1 { fill: #ddd; }
-.bullet .range.s2 { fill: #ccc; }
-.bullet .measure.s0 { fill: lightsteelblue; }
-.bullet .measure.s1 { fill: steelblue; }
-.bullet .title { font-size: 14px; font-weight: bold; }
-.bullet .subtitle { fill: #999; }
+#bar-body .bullet { font: 10px sans-serif; }
+#bar-body .bullet .marker { stroke: #000; stroke-width: 2px; }
+#bar-body .bullet .tick line { stroke: #666; stroke-width: .5px; }
+#bar-body .bullet .range.s0 { fill: #eee; }
+#bar-body .bullet .range.s1 { fill: #ddd; }
+#bar-body .bullet .range.s2 { fill: #ccc; }
+#bar-body .bullet .range.s3 { fill: #888; }
+#bar-body .bullet .range.s4 { fill: #777; }
+#bar-body .bullet .range.s5 { fill: #666; }
+#bar-body .bullet .range.s6 { fill: #555; }
+#bar-body .bullet .measure.s0 { fill: orange; }
+#bar-body .bullet .measure.s1 { fill: steelblue; }
+#bar-body .bullet .title { font-size: 14px; font-weight: bold; }
+#bar-body .bullet .subtitle { fill: #999; 
+}
+#bar-body2 .bullet { font: 10px sans-serif; }
+#bar-body2 .bullet .marker { stroke: #000; stroke-width: 2px; }
+#bar-body2 .bullet .tick line { stroke: #666; stroke-width: .5px; }
+#bar-body2 .bullet .range.s0 { fill: #eee; }
+#bar-body2 .bullet .range.s1 { fill: #ddd; }
+#bar-body2 .bullet .range.s2 { fill: #ccc; }
+#bar-body2 .bullet .range.s3 { fill: #888; }
+#bar-body2 .bullet .range.s4 { fill: #777; }
+#bar-body2 .bullet .range.s5 { fill: #666; }
+#bar-body2 .bullet .range.s6 { fill: #555; }
+#bar-body2 .bullet .measure.s0 { fill: lightgreen; }
+#bar-body2 .bullet .measure.s1 { fill: steelblue; }
+#bar-body2 .bullet .title { font-size: 14px; font-weight: bold; }
+#bar-body2 .bullet .subtitle { fill: #999; }
 #wheel-body {
 margin: 0 auto;
 }
@@ -150,4 +169,47 @@ cursor: pointer;
 background-color: red;
 color: white;
 text-align: center;
+}
+#eff-img {
+vertical-align: bottom;
+}
+#icon-img {
+width: 60px;
+height: 60px;
+}
+.icon-img-list {
+width: 60px;
+height: 60px;
+}
+.fillgsl {
+    margin-top: -25px;
+    margin-bottom: -25px;
+}
+.fillgsli {
+}
+.navigation-bar {
+    top: auto !important;
+    bottom: 0px;
+}
+ons-toolbar ~ .page__content {
+    top: 0px !important;
+}
+.nav-thum {
+    width: 12%;
+    height: 55%;
+    float: left;
+    margin-left: 12px;
+    margin-top: 12px;
+}
+.nav-thum-container {
+    position: relative;
+    margin: 0 auto;
+    height: 100%;
+    width: 33%;
+}
+.nav-thum[first] {
+    margin-left: 54px;
+}
+.nav-thum[active] {
+    background-color: rgb(61, 61, 61);
 }

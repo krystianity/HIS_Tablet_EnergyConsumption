@@ -14,17 +14,14 @@
    limitations under the License.
 -->
 <ons-page>
-    <ons-toolbar>
-        <div class="left"></div>
-        <div class="center"><ons-toolbar-button ng-click="addItemClick()"><ons-icon icon="ion-compose"></ons-icon></ons-toolbar-button></div>
-        <div class="right"></div>
-    </ons-toolbar>
     <ons-scroller>
     <ons-list id="mil" style="margin: -1px 0">
-        <ons-list-item modifier="chevron" class="item _il_" ng-repeat="item in items" ng-click="listItemClick(item.id)" id="_il_{{item.id}}">
+        <ons-list-item class="item _il_" ng-repeat="item in items" ng-click="listItemClick(item.id)" id="_il_{{item.id}}">
             <ons-row>
-                <ons-col width="60px">
-                    <div class="item-thum"></div>
+                <ons-col width="80px">
+                    <div class="item-thum">
+                        <img class="icon-img-list" src="{{item.getIconImage}}" />
+                    </div>
                 </ons-col>
                 <ons-col>
                     <header>
@@ -45,8 +42,23 @@
                         <span class="item-title"> / Device: {{item.category.name}}</span>
                     </p>
                 </ons-col>
+                <ons-col class="fillgsl">
+                    <svg class="fillgsli" id="fillgauge_{{item.id}}_1" width="16%" height="90%"></svg>
+                    <svg class="fillgsli" id="fillgauge_{{item.id}}_2" width="16%" height="90%"></svg>
+                </ons-col>
             </ons-row>
         </ons-list-item>
     </ons-list>
     </ons-scroller>
+    <ons-toolbar>
+        <div class="left"><ons-toolbar-button ng-click="addItemClick()"><ons-icon icon="ion-compose"></ons-icon></ons-toolbar-button></div>
+        <div class="center">
+            <div class="nav-thum-container">
+                <div class="item-thum nav-thum" first></div>
+                <div class="item-thum nav-thum" active></div>
+                <div class="item-thum nav-thum"></div>
+            </div>
+        </div>
+        <div class="right"></div>
+    </ons-toolbar>
 </ons-page>

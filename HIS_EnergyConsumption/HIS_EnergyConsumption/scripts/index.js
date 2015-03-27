@@ -58,6 +58,8 @@
             $("html").dblclick(onTouchHold.bind(this));
         }
 
+        registerKeyboardCombinations();
+
         console.log("VanillaJS ready!");
 
         var parent_call = onFullyLoaded.bind(this);
@@ -193,6 +195,69 @@
         });
     }
 
+    function registerKeyboardCombinations() {
+        console.log("registering keyboard shortcut combinations!");
+
+        //empty scope.items
+        Mousetrap.bind('ctrl+alt+shift+e', function (e) {
+            console.log("[CTRL+ALT+SHIFT+E] deleting scope.items!");
+            _app_scope.$apply(function () {
+                _app_scope.items = [];
+                _app_scope.saveItems();
+            });
+
+            return false;
+        }, 'keyup');
+
+        //load pre-defined alpha data form alpha.json into scope.items
+        Mousetrap.bind('ctrl+alt+shift+l', function (e) {
+            console.log("[CTRL+ALT+SHIFT+L] loading alpha scope.items!");
+
+            loadJsonData("db/alpha.json", function(success, data){
+                if(success){
+                    _app_scope.$apply(function () {
+                        _app_scope.loadItems(data);
+                        _app_scope.saveItems();
+                    });
+                } else {
+                    console.log("failed to get alpha.json!");
+                }
+            });
+
+            return false;
+        }, 'keyup');
+
+        //toggle day and night view
+        Mousetrap.bind('ctrl+alt+shift+n', function (e) {
+            console.log("[CTRL+ALT+SHIFT+N] toggeling night/day -view!");
+            _app_score.$apply(function () {
+                _app_scope.toggleDayNightView();
+            });
+            return false;
+        }, 'keyup');
+
+        //alternative to swipe gestures if app is running on a desktop browser
+        Mousetrap.bind('left', function (e) {
+            onSwipe(null, "right", null, null, null, null); //inverted for swipes!
+            return false;
+        }, 'keyup');
+
+        Mousetrap.bind('right', function (e) {
+            onSwipe(null, "left", null, null, null, null); //inverted for swipes!
+            return false;
+        }, 'keyup');
+
+        Mousetrap.bind('up', function (e) {
+            onSwipe(null, "up", null, null, null, null);
+            return false;
+        }, 'keyup');
+
+        Mousetrap.bind('down', function (e) {
+            onSwipe(null, "down", null, null, null, null);
+            return false;
+        }, 'keyup');
+    }
+
 })();
 
 ///called by $scope, apply any page related calls here
@@ -209,35 +274,36 @@ function _onPageChange(uri) {
     on the single pages */
 
     switch (uri) {
-        case "raw_stats":
-            console.log("Drawing liquids..");
-            v_drawLiquids(vc_getLiquidsData(_app_scope.items));
-            break;
-
-        case "raw_stats_second":
+        case "history":
             console.log("Drawing wheel..");
             $("#wheel-body").empty();
             v_drawWheel(vc_getWheelData(_devices, _days));
             break;
 
-        case "green_stats":
-            console.log("Drawing pie..");
-            $("pie-body").empty();
-            v_drawPie(vc_getPieData(_app_scope.items));
-            break;
-
-        case "green_stats_second":
+        case "green":
             console.log("Drawing bar..");
             $("#bar-body").empty();
-            v_drawBars("#bar-body", vc_getBarData(_app_scope.items));
+            $("#bar-body2").empty();
+            var tbars = vc_getBarData(_app_scope.items);
+            v_drawBars("#bar-body", tbars[0]);
+            v_drawBars("#bar-body2", tbars[1]);
             break;
 
         case "manage_items":
             //allow vertical scrolling on manage item list
             $("html").swipe("option", "allowPageScroll", "vertical");
+
+            console.log("Drawing liquids..");
+            v_drawLiquids(vc_getLiquidsData(_app_scope.items));
             break;
 
         default: break;
+    }
+
+    if (last_page == "manage_items" || last_page == "edit_item") {
+        _app_scope.$apply(function () {
+            _app_scope.saveItems();
+        });
     }
 };
 

@@ -110,8 +110,11 @@
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="db\alpha.json" />
     <Content Include="db\days.json" />
     <Content Include="db\devices.json" />
+    <Content Include="lib\mousetrap.min.js" />
+    <Content Include="lib\underscore-min.js" />
     <Content Include="scripts\bullet.js" />
     <Content Include="scripts\config.js" />
     <Content Include="scripts\controller.js" />
@@ -130,11 +133,9 @@
     <Content Include="styles\onsenui.css" />
     <Content Include="views\boot.html" />
     <Content Include="views\edit_item.html" />
-    <Content Include="views\green_stats.html" />
-    <Content Include="views\green_stats_second.html" />
+    <Content Include="views\green.html" />
     <Content Include="views\manage_items.html" />
-    <Content Include="views\raw_stats.html" />
-    <Content Include="views\raw_stats_second.html" />
+    <Content Include="views\history.html" />
     <Folder Include="images\" />
     <Content Include="lib\onsen\css\font_awesome\css\font-awesome.css" />
     <Content Include="lib\onsen\css\font_awesome\css\font-awesome.min.css" />

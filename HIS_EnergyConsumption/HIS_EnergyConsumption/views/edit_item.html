@@ -15,8 +15,8 @@
 -->
 <ons-page>
     <ons-row class="profile-wrapper">
-        <ons-col width="60px" class="profile-image-wrapper">
-            <div class="profile-image"></div>
+        <ons-col width="80px" class="profile-image-wrapper">
+            <div class="profile-image"><img id="icon-img" src="{{currentItem.getIconImage}}" /></div>
         </ons-col>
         <ons-col>
             <div class="profile-name">Nr. {{currentItem.id}}</div>
@@ -34,7 +34,7 @@
         </ons-list-item>
 
         <ons-list-item>
-            Age: {{currentItem.age_str}} <input type="range" class="range" ng-model="currentItem.age_num" min=1 max=7 ng-change="currentItem.updateAgeStr()">
+            Efficiency:<img id="eff-img" src="{{currentItem.getEffImage}}" /> <input type="range" class="range" ng-model="currentItem.age_num" min=1 max=7 ng-change="currentItem.updateAgeStr()">
         </ons-list-item>
 
         <ons-list-item>
