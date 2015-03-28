@@ -152,8 +152,8 @@ function vc_getWheelData(devices, days) {
                 {
                     "name": device.name, "children":
                     [
-                        { "name": (usage.watt * usage.hours) + "w.", "colour": cc },
-                        { "name": usage.hours + "h.", "colour": cc }
+                        { "name": Math.floor(usage.watt * usage.hours) + "w", "colour": cc },
+                        { "name": usage.hours + "h", "colour": cc }
                     ]
                 });
         }
@@ -164,18 +164,18 @@ function vc_getWheelData(devices, days) {
     return weeks;
 };
 
-///calculate array for v_drawPie using the items of the scope
+///calculate array for v_drawPie using the items of the scope, if you pass a single item, action applies only to this single one
 ///
-function vc_getLiquidsData(items) {
+function vc_getLiquidsData(items, item) {
 
     if (!vc_ca(items))
         return [];
 
-    var config1 = liquidFillGaugeDefaultSettings();
-    config1.circleColor = "#FF7777";
-    config1.textColor = "#FF4444";
-    config1.waveTextColor = "#FFAAAA";
-    config1.waveColor = "#FFDDDD";
+    var config1 = {};
+    var config2 = {};
+    var config3 = {};
+
+    config1 = liquidFillGaugeDefaultSettings();
     config1.textVertPosition = 0.8;
     config1.waveAnimateTime = 1000;
     config1.waveHeight = 0.05;
@@ -186,12 +186,8 @@ function vc_getLiquidsData(items) {
     config1.waveCount = 3;
     config1.circleThickness = 0.15;
 
-    var config2 = liquidFillGaugeDefaultSettings();
+    config2 = liquidFillGaugeDefaultSettings();
     config2.circleThickness = 0.15;
-    config2.circleColor = "#808015";
-    config2.textColor = "#555500";
-    config2.waveTextColor = "#FFFFAA";
-    config2.waveColor = "#AAAA39";
     config2.textVertPosition = 0.8;
     config2.waveAnimateTime = 1000;
     config2.waveHeight = 0.05;
@@ -201,10 +197,80 @@ function vc_getLiquidsData(items) {
     config2.textSize = 0.75;
     config2.waveCount = 3;
 
+    config3 = liquidFillGaugeDefaultSettings();
+    config3.circleThickness = 0.15;
+    config3.textVertPosition = 0.8;
+    config3.waveAnimateTime = 1000;
+    config3.waveHeight = 0.05;
+    config3.waveAnimate = true;
+    config3.waveRise = true;
+    config3.waveOffset = 0.25;
+    config3.textSize = 0.75;
+    config3.waveCount = 3;
+
+    //red
+    //config1.circleColor = "#FF7777";
+    config1.circleColor = "#ccc";
+    config1.waveTextColor = "#FFAAAA";
+    config1.waveColor = "#FFDDDD";
+
+    //green
+    //config2.circleColor = "#808015";
+    config2.circleColor = "#ccc";
+    config2.waveTextColor = "#FFFFAA";
+    config2.waveColor = "#AAAA39";
+
+    //blue
+    //is default
+
+    if (_app_scope.dayView) {
+
+        config1.circleColor = "#666";
+        config2.circleColor = "#666";
+
+        config1.textColor = "#FF4444";
+        config2.textColor = "#555500";
+        config3.textColor = "#045681";
+    } else {
+        config1.textColor = config1.waveTextColor;
+        config2.textColor = config2.waveTextColor;
+        config3.textColor = config3.waveTextColor; //#A4DBf8
+    }
+
     var liquids = [];
 
     var runt_h = 0;
     var cons_h = 0;
+    var de_max = 0;
+    var de_cur = 0;
+
+    if (typeof item !== "undefined") {
+
+        runt_h = vc_perc(item.hours, 24);
+
+        de_max = item.device.wattage[0];
+        de_cur = item.device.wattage[item.age_num - 1];
+        cons_h = vc_perc(de_cur, de_max);
+
+        liquids.push({
+            "id": "fillgauge_" + item.id + "_1",
+            "fill": item.active ? runt_h : 0,
+            "config": config3
+        });
+
+        liquids.push({
+            "id": "fillgauge_" + item.id + "_2",
+            "fill": item.active ? cons_h : 0,
+            "config": cons_h >= 50 ? config1 : config2
+        });
+
+        return liquids;
+    }
+
+    runt_h = 0;
+    cons_h = 0;
+    de_max = 0;
+    de_cur = 0;
     for (var i = 0; i < items.length; i++) {
 
         runt_h = vc_perc(items[i].hours, 24);
@@ -215,14 +281,14 @@ function vc_getLiquidsData(items) {
 
         liquids.push({
             "id": "fillgauge_" + items[i].id + "_1",
-            "fill": runt_h,
-            "config": config2
+            "fill": items[i].active ? runt_h : 0,
+            "config": config3
         });
 
         liquids.push({
             "id": "fillgauge_" + items[i].id + "_2",
-            "fill": cons_h,
-            "config": config1
+            "fill": items[i].active ? cons_h : 0,
+            "config": cons_h >= 50 ? config1 : config2
         });
     }
 

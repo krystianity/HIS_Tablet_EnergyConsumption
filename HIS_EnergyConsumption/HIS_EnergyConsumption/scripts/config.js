@@ -10,7 +10,7 @@ var _config = {
     "swipe_threshold": 72, //min. swipe distance that triggers swipe event
     "hold_threshold": 950, //ms to raise a touch hold event
     "boot_page": "boot", //first view that is loaded on app start
-    "boot_time": 1250, //time to fade out bootscreen
+    "boot_time": 2500, //time to fade out bootscreen
     "start_page": "manage_items", //view that is shown after boot-screen
     "view_dir": "views/",
     "view_format": ".html",
@@ -19,6 +19,10 @@ var _config = {
 
     "db_days_path": "db/days.json",
     "db_devices_path": "db/devices.json",
+
+    //fillgauge with adaption in %
+    "fillgauge_portrait": 28,
+    "fillgauge_landscape": 20,
 
     //takes care of swipe gesture navigation
     "navigation": {

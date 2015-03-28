@@ -33,6 +33,8 @@ angular.module('app').controller('AppController',
         $scope.devices = [];
         $scope.days = [];
         $scope.dayView = true; //day 'n' night
+        $scope.portrait = true;
+        $scope.fillgauge = $scope.config.fillgauge_portrait;
 
         ///this data is loaded by index.js onAppStart from json files in the dp dir, it has to be applied later
         ///
@@ -78,7 +80,9 @@ angular.module('app').controller('AppController',
             //$scope.changePage($scope.config.item_view, "lift");
 
             //on a simple touch the active state of the item will switch
-            $scope.toggleItemState($scope.getItemById(itemId));
+            var fullItem = $scope.getItemById(itemId);
+            $scope.toggleItemState(fullItem);
+            _redrawFillgauges(fullItem);
         };
 
         ///if the user touches and holds on one of the items in the manage_items view (list) - triggered by ontouchhold() in index.js
@@ -200,6 +204,10 @@ angular.module('app').controller('AppController',
                 $scope.dayView = false;
             else
                 $scope.dayView = true;
+
+            //call vanillajs change day function
+            _changeDayView(_current_page, $scope.dayView);
+            _redrawFillgauges();
         };
 
         $scope.loadItems(); //load items on start

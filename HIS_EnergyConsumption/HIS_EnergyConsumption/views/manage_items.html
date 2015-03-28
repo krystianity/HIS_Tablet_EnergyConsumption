@@ -13,38 +13,43 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<ons-page>
+<ons-page day="{{dayView}}">
     <ons-scroller>
     <ons-list id="mil" style="margin: -1px 0">
         <ons-list-item class="item _il_" ng-repeat="item in items" ng-click="listItemClick(item.id)" id="_il_{{item.id}}">
             <ons-row>
-                <ons-col width="80px">
-                    <div class="item-thum">
+                <ons-col class="item-col-list" width="80px">
+                    <div class="item-thum" day="{{dayView}}">
                         <img class="icon-img-list" src="{{item.getIconImage}}" />
                     </div>
                 </ons-col>
-                <ons-col>
+                <ons-col class="item-desc">
                     <header>
-                        <span class="item-title">{{item.device.name}}</span>
-                        <span class="item-title"> / {{item.description}}</span>
+                        <span class="item-title">{{item.category.name}}</span>
+                        <span class="item-title"> - {{item.description}}</span>
                     </header>
                     
                     <p class="item-desc">Green:
                         <ons-icon icon="fa-leaf" ng-show="item.isGreen"></ons-icon>
                         <ons-icon icon="fa-ban" ng-hide="item.isGreen"></ons-icon>
-                        <span class="item-title"> / Consumption: {{item.getConsumption}}</span>
+                        <span class="item-title"> Type: {{item.device.name}}</span>
                     </p>
 
                     <p class="item-desc">
                         Active:
                         <ons-icon icon="fa-flash" ng-show="item.active"></ons-icon>
                         <ons-icon icon="fa-times" ng-hide="item.active"></ons-icon>
-                        <span class="item-title"> / Device: {{item.category.name}}</span>
+                        <span class="item-title"> Consumption: {{item.getConsumption}}</span>
                     </p>
                 </ons-col>
                 <ons-col class="fillgsl">
-                    <svg class="fillgsli" id="fillgauge_{{item.id}}_1" width="16%" height="90%"></svg>
-                    <svg class="fillgsli" id="fillgauge_{{item.id}}_2" width="16%" height="90%"></svg>
+                    <svg class="fillgsli" id="fillgauge_{{item.id}}_1" width="{{fillgauge}}%"></svg>
+                    <svg class="fillgsli" id="fillgauge_{{item.id}}_2" width="{{fillgauge}}%"></svg>
+                </ons-col>
+
+                <ons-col ng-class="fillgst_ipad">
+                    <span class="fillgsti1" day="{{dayView}}">Runtime</span>
+                    <span class="fillgsti2" day="{{dayView}}">Efficiency</span>
                 </ons-col>
             </ons-row>
         </ons-list-item>
@@ -59,6 +64,9 @@
                 <div class="item-thum nav-thum"></div>
             </div>
         </div>
-        <div class="right"></div>
+        <div class="right"><ons-toolbar-button ng-click="toggleDayNightView()">
+                <ons-icon ng-hide="dayView" icon="fa-moon-o"></ons-icon>
+                <ons-icon ng-show="dayView" icon="fa-sun-o"></ons-icon>
+            </ons-toolbar-button></div>
     </ons-toolbar>
 </ons-page>

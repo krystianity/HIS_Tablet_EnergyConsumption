@@ -51,6 +51,7 @@
         $.mobile.ajaxEnabled = false;
         $.event.special.tap.tapholdThreshold = _config.hold_threshold;
 
+        //tobii studio prototype testing
         if(!detectIE())
             $("html").on("taphold", onTouchHold.bind(this));
         else {
@@ -58,7 +59,51 @@
             $("html").dblclick(onTouchHold.bind(this));
         }
 
+        //check for keyboard combinations if the app is running in a browser
         registerKeyboardCombinations();
+
+        //check for orientation changes if the app is running on a mobile device
+        $("body").on("orientationchange", function (event) {
+            console.log("device orientation changed, reloading page..");
+            _app_scope.$apply(function () {
+
+                if (_checkOrientation() == 0) {
+                    _app_scope.portrait = true;
+                    _app_scope.fillgauge = _config.fillgauge_portrait;
+                } else {
+                    _app_scope.portrait = false;
+                    _app_scope.fillgauge = _config.fillgauge_landscape;
+                }
+
+                _app_scope.changePage(_current_page);
+
+                //adjust ipad screenpositions
+                if ($(window).width() < 800) {
+                    _app_scope.fillgst_ipad = "fillgst fillgst-ipad";
+                } else {
+                    _app_scope.fillgst_ipad = "fillgst";
+                }
+            });
+        });
+
+        //set device orientation on start
+        _app_scope.$apply(function () {
+
+            if (_checkOrientation() == 0) {
+                _app_scope.portrait = true;
+                _app_scope.fillgauge = _config.fillgauge_portrait;
+            } else {
+                _app_scope.portrait = false;
+                _app_scope.fillgauge = _config.fillgauge_landscape;
+            }
+
+            //adjust ipad screenpositions
+            if ($(window).width() < 800) {
+                _app_scope.fillgst_ipad = "fillgst fillgst-ipad";
+            } else {
+                _app_scope.fillgst_ipad = "fillgst";
+            }
+        });
 
         console.log("VanillaJS ready!");
 
@@ -179,7 +224,7 @@
     ///
     function onFullyLoaded() {
         console.log("App is ready, in start screen..");
-
+        //..
     };
 
     // ### inner functions ###
@@ -230,8 +275,10 @@
         //toggle day and night view
         Mousetrap.bind('ctrl+alt+shift+n', function (e) {
             console.log("[CTRL+ALT+SHIFT+N] toggeling night/day -view!");
-            _app_score.$apply(function () {
+            _app_scope.$apply(function () {
                 _app_scope.toggleDayNightView();
+                _changeDayView(_current_page, _app_scope.dayView);
+                _redrawFillgauges();
             });
             return false;
         }, 'keyup');
@@ -278,23 +325,31 @@ function _onPageChange(uri) {
             console.log("Drawing wheel..");
             $("#wheel-body").empty();
             v_drawWheel(vc_getWheelData(_devices, _days));
+            _changeDayView(uri, _app_scope.dayView);
             break;
 
         case "green":
+            //allow vertical scrolling on green view
+            $("html").swipe("option", "allowPageScroll", "vertical");
+
             console.log("Drawing bar..");
             $("#bar-body").empty();
             $("#bar-body2").empty();
             var tbars = vc_getBarData(_app_scope.items);
             v_drawBars("#bar-body", tbars[0]);
             v_drawBars("#bar-body2", tbars[1]);
+            _changeDayView(uri, _app_scope.dayView);
             break;
 
         case "manage_items":
             //allow vertical scrolling on manage item list
             $("html").swipe("option", "allowPageScroll", "vertical");
+            _redrawFillgauges();
+            _changeDayView(uri, _app_scope.dayView);
+            break;
 
-            console.log("Drawing liquids..");
-            v_drawLiquids(vc_getLiquidsData(_app_scope.items));
+        case "edit_item":
+            _changeDayView(uri, _app_scope.dayView);
             break;
 
         default: break;
@@ -305,6 +360,99 @@ function _onPageChange(uri) {
             _app_scope.saveItems();
         });
     }
+};
+
+///changes color and styles of a view related to day=true or day=false | day/night view
+///
+function _changeDayView(view, day) {
+    if (day) {
+        //dayview
+        switch (view) {
+
+            case "edit_item":
+                $(".page__background").css("background-color", "ghostwhite");
+                $(".settings-list").css("background-color", "ghostwhite");
+                $(".list__item").css("color", "black");
+                $(".profile-name").css("color", "black");
+                $(".profile-email").css("color", "black");
+                $(".list--inset").css("border", "1px solid #ddd");
+                break;
+
+            case "manage_items":
+                $(".page__background").css("background-color", "ghostwhite");
+                $(".list__item").css("background-color", "ghostwhite");
+                $(".item-desc").css("color", "#666");
+                $(".navigation-bar").removeClass("transparent-day");
+                $(".navigation-bar").removeClass("transparent-night");
+                break;
+
+            case "green":
+                $(".page__background").removeClass("background-green-night");
+                $(".page__background").addClass("background-green-day");
+                $(".navigation-bar").addClass("transparent-day");
+                $(".navigation-bar").removeClass("transparent-night");
+                break;
+
+            case "history":
+                $(".page__background").removeClass("background-history-night");
+                $(".page__background").addClass("background-history-day");
+                $(".navigation-bar").addClass("transparent-day");
+                $(".navigation-bar").removeClass("transparent-night");
+                break;
+        }
+    } else {
+        //nightview
+        switch (view) {
+
+            case "edit_item":
+                $(".page__background").css("background-color", "dimgrey");
+                $(".settings-list").css("background-color", "dimgrey");
+                $(".list__item").css("color", "white");
+                $(".profile-name").css("color", "white");
+                $(".profile-email").css("color", "white");
+                $(".list--inset").css("border", "1px solid lightgrey");
+                $(".navigation-bar").removeClass("transparent-day");
+                $(".navigation-bar").addClass("transparent-night");
+                break;
+
+            case "manage_items":
+                $(".page__background").css("background-color", "dimgrey");
+                $(".list__item").css("background-color", "dimgrey");
+                $(".item-desc").css("color", "ghostwhite");
+                $(".navigation-bar").removeClass("transparent-day");
+                $(".navigation-bar").addClass("transparent-night");
+                break;
+
+            case "green":
+                $(".page__background").removeClass("background-green-day");
+                $(".page__background").addClass("background-green-night");
+                $(".navigation-bar").removeClass("transparent-day");
+                $(".navigation-bar").addClass("transparent-night");
+                break;
+
+            case "history":
+                $(".page__background").removeClass("background-history-day");
+                $(".page__background").addClass("background-history-night");
+                $(".navigation-bar").removeClass("transparent-day");
+                $(".navigation-bar").addClass("transparent-night");
+                break;
+        }
+    }
+};
+
+///uses viscalc.js and visualisation.js to draw the gauges on the ids of the views
+///
+function _redrawFillgauges(item) {
+    console.log("Drawing liquids..");
+
+    if(typeof item === "undefined")
+        $(".fillgsli").empty();
+    else {
+        $("#fillgauge_" + item.id + "_1").empty();
+        $("#fillgauge_" + item.id + "_2").empty();
+    }
+
+    v_drawLiquids(vc_getLiquidsData(_app_scope.items, item));
 };
 
 ///checks if a swipe action is not related to navigation as it is an action / global because of anon event callback
@@ -327,6 +475,19 @@ function _specialCaseSwiping(direction) {
     return false; //continue with common onSwipe() event
 }
 
+///gets the devices orientation, 0 = portrait & 1 = landscape
+///
+function _checkOrientation() {
+    var _w = $(window).width();
+    var _h = $(window).height();
+    if (_h > _w) {
+        //portrait
+        return 0;
+    } else {
+        //landscape
+        return 1;
+    }
+}
 
 ///returns version of IE or false, if browser is not Internet Explorer
 ///

@@ -14,5 +14,23 @@
    limitations under the License.
 -->
 <ons-page>
+    <center ng-show="portrait">
+        <h1>Consumption History</h1>
+    </center>
+    <div ng-hide="portrait">
+        <!-- landscape -->
+        <h1 id="h-header">Consumption History</h1>
+    </div>
     <div id="wheel-body"></div>
+    <ons-toolbar>
+        <div class="left"></div>
+        <div class="center">
+            <div class="nav-thum-container">
+                <div class="item-thum nav-thum" first></div>
+                <div class="item-thum nav-thum"></div>
+                <div class="item-thum nav-thum" active></div>
+            </div>
+        </div>
+        <div class="right"></div>
+    </ons-toolbar>
 </ons-page>

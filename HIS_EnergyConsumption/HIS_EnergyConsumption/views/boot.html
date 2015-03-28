@@ -14,5 +14,11 @@
    limitations under the License.
 -->
 <ons-page>
-    <center>Boot View</center>
+    <center id="boot-logo-portrait" ng-show="portrait">
+        <img src="images/bootlogo.png" />
+    </center>
+    <center id="boot-logo-landscape" ng-hide="portrait">
+        <img src="images/bootlogo.png" />
+    </center>
+    <center><footer>© 2015 Dennis Stodko & Christian Fröhlingsdorf</footer></center>
 </ons-page>

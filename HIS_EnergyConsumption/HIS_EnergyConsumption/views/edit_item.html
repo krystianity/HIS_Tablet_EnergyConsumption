@@ -15,51 +15,53 @@
 -->
 <ons-page>
     <ons-row class="profile-wrapper">
-        <ons-col width="80px" class="profile-image-wrapper">
-            <div class="profile-image"><img id="icon-img" src="{{currentItem.getIconImage}}" /></div>
+        <ons-col width="80px" class="profile-image-wrapper" day="{{dayView}}">
+            <div class="profile-image" day="{{dayView}}"><img id="icon-img" src="{{currentItem.getIconImage}}" /></div>
         </ons-col>
-        <ons-col>
+        <ons-col class="profile-desc">
             <div class="profile-name">Nr. {{currentItem.id}}</div>
             <div class="profile-email">{{currentItem.device.name}} / {{currentItem.category.name}}</div>
         </ons-col>
     </ons-row>
-   
+
     <ons-list modifier="inset" class="settings-list">
-        <ons-list-item>
-            Category: <select ng-model="currentItem.category" ng-options="cat1 as cat1.name for cat1 in devices" ng-change="onCategorySelect()"></select>
+        <ons-list-item class="ei_list__item">
+            Category: <span class="ei_1"><select ng-model="currentItem.category" ng-options="cat1 as cat1.name for cat1 in devices" ng-change="onCategorySelect()"></select></span>
         </ons-list-item>
 
-        <ons-list-item>
-            Device: <select ng-model="currentItem.device" ng-options="dev1 as dev1.name for dev1 in currentItem.category.devices"></select>
+        <ons-list-item class="ei_list__item">
+            Device: <span class="ei_2"><select ng-model="currentItem.device" ng-options="dev1 as dev1.name for dev1 in currentItem.category.devices"></select></span>
         </ons-list-item>
 
-        <ons-list-item>
-            Efficiency:<img id="eff-img" src="{{currentItem.getEffImage}}" /> <input type="range" class="range" ng-model="currentItem.age_num" min=1 max=7 ng-change="currentItem.updateAgeStr()">
+        <ons-list-item class="ei_list__item">
+            Efficiency: <img id="eff-img" src="{{currentItem.getEffImage}}" /> <span class="ei_3"><input type="range" class="range" ng-model="currentItem.age_num" min=1 max=7 ng-change="currentItem.updateAgeStr()"></span>
         </ons-list-item>
 
-        <ons-list-item>
-            Hours: {{currentItem.hours}} <input type="range" class="range" ng-model="currentItem.hours" min=1 max=24>
-             - W/H per day:{{currentItem.getConsumption}}
+        <ons-list-item class="ei_list__item">
+            Daily Runtime: <span id="fixed-num">{{currentItem.hours}}h</span> <span class="ei_4"><input type="range" class="range" ng-model="currentItem.hours" min=0 max=24 step="0.1"></span>
         </ons-list-item>
 
-        <ons-list-item>
-            Wattage: {{currentItem.getWattage}}
+        <ons-list-item class="ei_list__item">
+            Wattage: <span class="ei_5">{{currentItem.getWattage}}</span>
         </ons-list-item>
 
-        <ons-list-item>
-            Description: <input type="text" ng-model="currentItem.description" />
+        <ons-list-item class="ei_list__item">
+            Description: <span class="ei_6"><input type="text" ng-model="currentItem.description" size="29" maxlength="17" /></span>
         </ons-list-item>
 
     </ons-list>
     <br>
-   <ons-list modifier="inset" class="settings-list">
+    <ons-list modifier="inset" class="settings-list">
         <!-- <ons-list-item modifier="tappable" ng-click="removeItemClick()" class="center">
             <ons-icon icon="fa-times"></ons-icon>
             Swipe Up to Save / Swipe Down to Delete
         </ons-list-item> -->
-       <ons-list-item ng-show="removeItemSwipe" class="warning">
-           Swipe UP again if you really want to delete this device! Swipe DOWN to save.
-       </ons-list-item>
+        <ons-list-item ng-show="removeItemSwipe" class="warning">
+            Swipe UP again if you really want to delete this device! Swipe DOWN to save.
+        </ons-list-item>
     </ons-list>
     <br>
+    <center id="swipe-info" ng-hide="removeItemSwipe">
+        <img src="images/swipe_info.png" />
+    </center>
 </ons-page>

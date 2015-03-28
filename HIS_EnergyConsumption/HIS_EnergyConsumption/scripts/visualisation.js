@@ -59,15 +59,27 @@ function v_drawBars(bar, data) {
 
 function v_drawWheel(json) {
 
-    var width = $(window).width() - 160,
-    height = width,
-    radius = width / 2,
+    var width = 0;
+    var height = 0;
+    var _w = $(window).width();
+    var _h = $(window).height();
+
+    if (_h > _w) {
+        //portrait
+        width = _w - 50;
+    } else {
+        //landscape
+        width = _h - 100;
+    }
+    height = width;
+
+    var radius = width / 2,
     x = d3.scale.linear().range([0, 2 * Math.PI]),
     y = d3.scale.pow().exponent(1.3).domain([0, 1]).range([0, radius]),
     padding = 5,
     duration = 1500;
 
-    $("#wheel-body").css("width", width + "px");
+    $("#wheel-body").css("width", width + "px").css("height", height + "px");
 
     var div = d3.select("#wheel-body");
 
