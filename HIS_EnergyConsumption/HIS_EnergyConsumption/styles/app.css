@@ -367,3 +367,9 @@ height: 80px;
 body {
     font-family: Helvetica !important;
 }
+.daynighttext[day=true]{
+    color:black;
+}
+.daynighttext[day=false]{
+    color:ghostwhite;
+}

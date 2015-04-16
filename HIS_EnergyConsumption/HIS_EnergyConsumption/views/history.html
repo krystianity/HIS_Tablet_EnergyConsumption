@@ -15,11 +15,11 @@
 -->
 <ons-page>
     <center ng-show="portrait">
-        <h1>Consumption History</h1>
+        <h1 class="daynighttext" day="{{dayView}}">Consumption History</h1>
     </center>
     <div ng-hide="portrait">
         <!-- landscape -->
-        <h1 id="h-header">Consumption History</h1>
+        <h1 id="h-header" class="daynighttext" day="{{dayView}}">Consumption History</h1>
     </div>
     <div id="wheel-body"></div>
     <ons-toolbar>
