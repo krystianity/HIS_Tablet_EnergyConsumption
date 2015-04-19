@@ -14,8 +14,7 @@
    limitations under the License.
 -->
 <ons-page day="{{dayView}}">
-    <ons-scroller>
-    <ons-list id="mil" style="margin: -1px 0">
+    <ons-lazy-repeat id="mil" style="margin: -1px 0">
         <ons-list-item class="item _il_" ng-repeat="item in items" ng-click="listItemClick(item.id)" id="_il_{{item.id}}">
             <ons-row>
                 <ons-col class="item-col-list" width="80px">
@@ -53,8 +52,7 @@
                 </ons-col>
             </ons-row>
         </ons-list-item>
-    </ons-list>
-    </ons-scroller>
+    </ons-lazy-repeat>
     <ons-toolbar>
         <div class="left"><ons-toolbar-button ng-click="addItemClick()"><ons-icon icon="ion-compose"></ons-icon></ons-toolbar-button></div>
         <div class="center">
