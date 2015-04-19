@@ -154,6 +154,8 @@ angular.module('app').controller('AppController',
         ///
         $scope.removeItemClick = function () {
            
+           $scope.missingItem = false; //reset error message
+           
             /* has to be triggered twice *update* */
             if (!$scope.removeItemSwipe) {
                 //swipes for the first time, show a message
@@ -161,8 +163,6 @@ angular.module('app').controller('AppController',
                 return; //cancle further steps
             }
             //if its already true, we just continue and delete the item
-            
-            $scope.missingItem = false; //reset error message
 
             if($scope.pushItem){
               //just skip if the item wasnt even a member of the itemlist
