@@ -27,6 +27,8 @@ angular.module('app').controller('AppController',
         $scope.currentItem = {};
         $scope.currentCategory = {};
         $scope.removeItemSwipe = false;
+        $scope.missingItem = false; //error message
+        $scope.pushItem = false; //if the item should be pushed to the list on save or not
         $scope.items = [];
 
         //data
@@ -35,7 +37,6 @@ angular.module('app').controller('AppController',
         $scope.dayView = true; //day 'n' night
         $scope.portrait = true;
         $scope.fillgauge = $scope.config.fillgauge_portrait;
-        $scope.pushItem = false; //if the item should be pushed to the list on save or not
 
          $scope.firstStart = function() {
             if(localStorage){
@@ -115,12 +116,24 @@ angular.module('app').controller('AppController',
         ///
         $scope.saveItem = function () {
             console.log("Saving item..");
+            
+            //dont save items without category or device obj
+            if(Object.keys($scope.currentItem.category).length === 0
+            || Object.keys($scope.currentItem.device).length === 0) {
+               $scope.missingItem = true;
+               return;
+            }
+            
+            $scope.missingItem = false; //reset error message
+            
             if($scope.pushItem){
                $scope.pushItem = false;
                //actually just adding it to the list
                $scope.items.push($scope.currentItem);
                $scope.saveItems();
             }
+            
+            $scope.changePage($scope.config.item_list, "fade");
         };
 
         ///if the user touches the add item button on the manage_items view (list)
@@ -148,6 +161,8 @@ angular.module('app').controller('AppController',
                 return; //cancle further steps
             }
             //if its already true, we just continue and delete the item
+            
+            $scope.missingItem = false; //reset error message
 
             if($scope.pushItem){
               //just skip if the item wasnt even a member of the itemlist

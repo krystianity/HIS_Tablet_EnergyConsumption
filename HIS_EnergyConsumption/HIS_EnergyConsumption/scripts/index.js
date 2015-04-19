@@ -455,7 +455,10 @@ function _specialCaseSwiping(direction) {
             _app_scope.$apply(function () {
                 _app_scope.saveItem();
             });
-        } else if (direction == _config.navigation.item_delete) {
+            
+            return true; //stop the onSwipe() event
+        } 
+        else if (direction == _config.navigation.item_delete) {
             //down swipe on the item detail view means bye bye item (a. deleting the item)
             _app_scope.$apply(function () {
                 _app_scope.removeItemClick(); //changes page as well

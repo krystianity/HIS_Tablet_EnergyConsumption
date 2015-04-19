@@ -1,5 +1,5 @@
 /*
-   Copyright 2015 Dennis Stodko, Christian Fröhlingsdorf
+   Copyright 2015 Dennis Stodko, Christian FrÃ¶hlingsdorf
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -126,6 +126,9 @@ padding-top: 40px;
 position: relative;
 width: 100%;
 }
+#bar-body2 {
+margin-bottom: 200px;
+}
 #bar-body .bullet { font: 10px sans-serif; }
 #bar-body .bullet .marker { stroke: #000; stroke-width: 2px; }
 #bar-body .bullet .tick line { stroke: #666; stroke-width: .5px; }
@@ -158,6 +161,7 @@ width: 100%;
 #wheel-body {
 margin: 0 auto;
 margin-top: 20px;
+opacity: 0.85;
 }
 #wheel-body path {
 stroke: #000;
