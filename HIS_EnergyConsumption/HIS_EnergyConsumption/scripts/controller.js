@@ -124,6 +124,8 @@ angular.module('app').controller('AppController',
                return;
             }
             
+            $scope.missingItem = false; //reset error message
+            
             if($scope.pushItem){
                $scope.pushItem = false;
                //actually just adding it to the list
@@ -159,6 +161,8 @@ angular.module('app').controller('AppController',
                 return; //cancle further steps
             }
             //if its already true, we just continue and delete the item
+            
+            $scope.missingItem = false; //reset error message
 
             if($scope.pushItem){
               //just skip if the item wasnt even a member of the itemlist
