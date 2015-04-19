@@ -119,6 +119,7 @@
     <Content Include="scripts\config.js" />
     <Content Include="scripts\controller.js" />
     <Content Include="scripts\eleItem.js" />
+    <Content Include="scripts\globals.js" />
     <Content Include="scripts\hslRGB.js" />
     <Content Include="scripts\viscalc.js" />
     <Content Include="scripts\visualisation.js" />
