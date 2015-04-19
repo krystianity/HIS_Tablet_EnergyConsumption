@@ -232,17 +232,6 @@
 
     // ### inner functions ###
 
-    function loadJsonData(file, callback) {
-        $.getJSON(file, function (jdata) {
-            console.log("got json data!");
-            callback(true, jdata);
-        }).fail(function (err) {
-            console.log("failed to load " + file);
-            console.log(err);
-            callback(false, null);
-        });
-    }
-
     function registerKeyboardCombinations() {
         console.log("registering keyboard shortcut combinations!");
 
