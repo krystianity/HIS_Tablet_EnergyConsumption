@@ -65,7 +65,8 @@ function _addEleItemConsumptionGetter(_o) {
             if (!this.device || !this.device.wattage || !this.age_num)
                 return 0;
             else
-                return (this.device.wattage[parseInt(this.age_num) - 1] * this.hours);
+                return Number((this.device.wattage[parseInt(this.age_num) - 1] * this.hours).toFixed(2));
+                //return (this.device.wattage[parseInt(this.age_num) - 1] * this.hours);
         }
     });
 };
