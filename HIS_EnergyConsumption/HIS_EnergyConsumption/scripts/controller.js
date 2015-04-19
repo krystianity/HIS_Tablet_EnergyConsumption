@@ -117,6 +117,8 @@ angular.module('app').controller('AppController',
         $scope.saveItem = function () {
             console.log("Saving item..");
             
+            $scope.removeItemSwipe = false;
+            
             //dont save items without category or device obj
             if(Object.keys($scope.currentItem.category).length === 0
             || Object.keys($scope.currentItem.device).length === 0) {
