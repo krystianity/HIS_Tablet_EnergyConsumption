@@ -6,7 +6,7 @@ var _devices = [];
 var _days = []; //loaded in config.js from the json files
 
 var _config = {
-    "web_version": false, //running a webbrowser?
+    "web_version": true, //running a webbrowser?
     "swipe_threshold": 72, //min. swipe distance that triggers swipe event
     "hold_threshold": 950, //ms to raise a touch hold event
     "boot_page": "boot", //first view that is loaded on app start
