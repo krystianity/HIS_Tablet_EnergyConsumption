@@ -225,9 +225,7 @@
     function onFullyLoaded() {
         console.log("App is ready, in start screen..");
         //..
-        _app_scope.$apply(function(){
-            _app_scope.firstStart();
-        });
+         _app_scope.firstStart();
     };
 
     // ### inner functions ###
