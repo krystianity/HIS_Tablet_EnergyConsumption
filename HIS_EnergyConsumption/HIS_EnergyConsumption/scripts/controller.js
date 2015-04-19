@@ -1,4 +1,4 @@
-﻿/*
+/*
    Copyright 2015 Dennis Stodko, Christian Fröhlingsdorf
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -94,6 +94,16 @@ angular.module('app').controller('AppController',
             $scope.changePage($scope.config.item_view, "lift");
         };
 
+        ///adding the item to the last, after it was save by the user in the edit-view, because
+        ///adding it earlier results in svg attribute errors with angular js and fillgauge
+        ///
+        $scope.saveItem = function () {
+            console.log("Saving item..");
+            //actually just adding it to the list
+            $scope.items.push($scope.currentItem);
+            $scope.saveItems();
+        };
+
         ///if the user touches the add item button on the manage_items view (list)
         ///
         $scope.addItemClick = function () {
@@ -101,7 +111,7 @@ angular.module('app').controller('AppController',
 
             var ni = new EleItem($scope.getNextItemId());
             $scope.currentItem = ni;
-            $scope.items.push(ni);
+            //$scope.items.push(ni); do not do this here! exceptions will be thrown
 
             $scope.removeItemSwipe = false; //and reset delete state
             $scope.changePage($scope.config.item_view, "lift");

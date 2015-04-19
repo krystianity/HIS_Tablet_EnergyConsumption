@@ -1,4 +1,4 @@
-﻿/*
+/*
    Copyright 2015 Dennis Stodko, Christian Fröhlingsdorf
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -461,7 +461,10 @@ function _specialCaseSwiping(direction) {
 
     if (_current_page == _config.item_view) {
         if (direction == _config.navigation.item_save) {
-            //saving item here a. doing nothing ;)
+            //saving item here a. doing nothing ;) --> update we are saving the item now
+            _app_scope.$apply(function () {
+                _app_scope.saveItem();
+            });
         } else if (direction == _config.navigation.item_delete) {
             //down swipe on the item detail view means bye bye item (a. deleting the item)
             _app_scope.$apply(function () {
