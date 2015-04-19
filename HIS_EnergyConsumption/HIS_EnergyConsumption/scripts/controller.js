@@ -35,6 +35,7 @@ angular.module('app').controller('AppController',
         $scope.dayView = true; //day 'n' night
         $scope.portrait = true;
         $scope.fillgauge = $scope.config.fillgauge_portrait;
+        $scope.pushItem = false; //if the item should be pushed to the list on save or not
 
          $scope.firstStart = function() {
             if(localStorage){
@@ -103,6 +104,7 @@ angular.module('app').controller('AppController',
         ///
         $scope.listItemHold = function (itemId) {
             $scope.currentItem = $scope.getItemById(itemId);
+            $scope.pushItem = false; //we do not want to duplicate the item
             $scope.removeItemSwipe = false; //and reset delete state
             //$scope.toggleItemState($scope.currentItem); //because listItemClick will be triggered before
             $scope.changePage($scope.config.item_view, "lift");
@@ -113,9 +115,12 @@ angular.module('app').controller('AppController',
         ///
         $scope.saveItem = function () {
             console.log("Saving item..");
-            //actually just adding it to the list
-            $scope.items.push($scope.currentItem);
-            $scope.saveItems();
+            if($scope.pushItem){
+               $scope.pushItem = false;
+               //actually just adding it to the list
+               $scope.items.push($scope.currentItem);
+               $scope.saveItems();
+            }
         };
 
         ///if the user touches the add item button on the manage_items view (list)
@@ -128,13 +133,14 @@ angular.module('app').controller('AppController',
             //$scope.items.push(ni); do not do this here! exceptions will be thrown
 
             $scope.removeItemSwipe = false; //and reset delete state
+            $scope.pushItem = true; //add the item to the list when it is saved
             $scope.changePage($scope.config.item_view, "lift");
         };
 
         ///if the user touches the delete button on the edit_item view / can also be triggered by swipe down through onSwipe()
         ///
         $scope.removeItemClick = function () {
-
+           
             /* has to be triggered twice *update* */
             if (!$scope.removeItemSwipe) {
                 //swipes for the first time, show a message
@@ -142,6 +148,14 @@ angular.module('app').controller('AppController',
                 return; //cancle further steps
             }
             //if its already true, we just continue and delete the item
+
+            if($scope.pushItem){
+              //just skip if the item wasnt even a member of the itemlist
+               $scope.pushItem = false;
+               $scope.currentItem = null;
+               $scope.changePage($scope.config.item_list, "fade");
+               return;
+           }
 
             var index = $scope.items.indexOf($scope.currentItem);
             $scope.items.splice(index, 1);
