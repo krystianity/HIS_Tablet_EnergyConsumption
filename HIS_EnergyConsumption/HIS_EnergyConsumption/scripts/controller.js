@@ -36,6 +36,20 @@ angular.module('app').controller('AppController',
         $scope.portrait = true;
         $scope.fillgauge = $scope.config.fillgauge_portrait;
 
+         $scope.firstStart = function() {
+            if(localStorage){
+               if(!localStorage.firstStart){ //load alpha.json on firstStart of app (adding sample data)
+                  localStorage.firstStart = true;
+                  loadJsonData("db/alpha.json", function(success, data){
+                      if(success){
+                           $scope.loadItems(data);
+                           $scope.saveItems();
+                      }
+                  });
+               }
+            }
+         };
+
         ///this data is loaded by index.js onAppStart from json files in the dp dir, it has to be applied later
         ///
         $scope.setDevices = function (devices, days) {
